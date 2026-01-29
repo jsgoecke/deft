@@ -6,6 +6,12 @@ Copyright © 2025-2026 Jonathan "visionik" Taylor
 https://deft.md  
 Licensed under the [MIT License](./LICENSE.md)
 
+## TL;DR
+
+Deft is a framework that makes AI coding assistants dramatically more effective by providing them with consistent, hierarchical coding standards. Instead of repeating the same instructions in every AI session, you define your preferences once—from general coding style to project-specific rules—and AI agents automatically follow them. The result: higher quality code, reproducible workflows, and AI that gets better over time by learning from your team's patterns.
+
+**Key benefits:** No more "AI forgot my preferences", no more inconsistent code style across AI sessions, no more re-explaining your stack every time.
+
 ## 🎯 What is Deft?
 
 Deft is a structured approach to working with AI coding assistants (particularly Warp AI) that provides:
