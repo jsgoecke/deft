@@ -148,25 +148,22 @@ While Deft is almost entirely pure English/Markdown, it includes a small Python 
 ### Quick Start with `run`
 
 ```bash
-# 1. Install deft in your project
-run install              # Creates ./deft/ directory structure
+# 1. Configure your personal preferences
+deft/run bootstrap       # Creates user.md with your preferences
 
-# 2. Configure your personal preferences (run from deft directory)
-run bootstrap            # Creates user.md with your preferences
+# 2. Configure project settings
+deft/run project         # Creates project.md with tech stack, standards
 
-# 3. Configure project settings
-run project              # Creates project.md with tech stack, standards
-
-# 4. Generate specification (optional)
-run spec                 # Creates PRD.md for AI-assisted spec interview
+# 3. Generate specification (optional)
+deft/run spec            # Creates PRD.md for AI-assisted spec interview
 
 # Other commands
-run reset                # Reset config files
-run validate             # Check deft configuration
-run doctor               # Check system dependencies
+deft/run reset           # Reset config files
+deft/run validate        # Check deft configuration
+deft/run doctor          # Check system dependencies
 ```
 
-The commands flow naturally: **install → bootstrap → project → spec**
+The commands flow naturally: **bootstrap → project → spec**
 
 ### 1. Set Up Your User Preferences
 
