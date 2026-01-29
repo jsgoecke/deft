@@ -12,6 +12,8 @@ Deft is a framework that makes AI coding assistants dramatically more effective 
 
 **Key benefits:** No more "AI forgot my preferences", no more inconsistent code style across AI sessions, no more re-explaining your stack every time.
 
+**Don't have preferences yet?** No problem—Deft ships with professional-grade defaults for Python, Go, TypeScript, C++, and common workflows. Use it out of the box and customize later.
+
 ## 🎯 What is Deft?
 
 Deft is a structured approach to working with AI coding assistants (particularly Warp AI) that provides:
