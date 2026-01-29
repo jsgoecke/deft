@@ -143,45 +143,58 @@ deft/
 
 ## 🚀 Getting Started
 
-While Deft is almost entirely pure English/Markdown, it includes a small Python CLI to guide initial setup and configuration:
+### 1. Install Deft
 
-### Quick Start with `run`
+Create a directory for a new project or `cd` into an existing one:
 
 ```bash
-# 1. Configure your personal preferences
+mkdir my-project && cd my-project  # New project
+# OR
+cd ~/Projects/existing-project      # Existing project
+
+git clone https://github.com/visionik/deft  # Installs deft in ./deft/ subdir
+```
+
+### 2. Bootstrap Your Configuration
+
+Use `deft/run bootstrap` to create your user and project preferences:
+
+```bash
+deft/run bootstrap       # Interactive setup for user.md and project.md
+```
+
+Or use individual commands:
+
+```bash
 deft/run bootstrap       # Creates user.md with your preferences
-
-# 2. Configure project settings
 deft/run project         # Creates project.md with tech stack, standards
+```
 
-# 3. Generate specification (optional)
-deft/run spec            # Creates PRD.md for AI-assisted spec interview
+### 3. Generate Specification
 
-# Other commands
+`deft/run bootstrap` will guide you through creating a `SPECIFICATION.md`, or create one anytime:
+
+```bash
+deft/run spec            # AI-assisted specification interview
+```
+
+Other commands:
+
+```bash
 deft/run reset           # Reset config files
 deft/run validate        # Check deft configuration
 deft/run doctor          # Check system dependencies
 ```
 
-The commands flow naturally: **bootstrap → project → spec**
+### 4. Build With AI
 
-### 1. Set Up Your User Preferences
+Ask your AI to build the product/project from `SPECIFICATION.md` and away you go:
 
-Or manually edit `user.md` to configure personal preferences:
-
-```markdown
-# User Preferences
-
-## Name
-
-Address the user as: **YourName**
-
-## Custom Rules
-
-- Your custom preferences here
+```
+Read SPECIFICATION.md and implement the project following deft/main.md standards.
 ```
 
-### 2. Understand the Hierarchy
+### Rule Hierarchy
 
 Rules cascade with precedence:
 
@@ -192,27 +205,9 @@ Rules cascade with precedence:
 5. **main.md** - general AI behavior
 6. **specification.md** (lowest) - requirements
 
-### 3. Reference in Warp
+### Continuous Improvement
 
-Upload these files to **Warp Drive** so they're available to AI sessions:
-
-1. Open Warp
-2. Access Warp Drive (notebooks feature)
-3. Upload relevant deft/\*.md files
-4. Reference them in your Warp rules/agent instructions
-
-### 4. Use in Projects
-
-For each project:
-
-1. Copy or link the deft directory
-2. Create/update `project.md` with project-specific rules
-3. Create/update `specification.md` or link to specs
-4. Let the AI reference these during development
-
-### 5. Evolve Over Time
-
-The deft process improves continuously:
+The deft process evolves over time:
 
 - AI updates `lessons.md` when learning better patterns
 - AI notes ideas in `ideas.md` for future consideration
