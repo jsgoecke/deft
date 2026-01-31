@@ -18,7 +18,8 @@ N. [feature]
 
 - ~ Use Claude AskInterviewQuestion when available (emulate it if not available)
 - ! If Input Template fields are empty: ask overview, then features, then details
-- ! Ask one focused, non-trivial question per step
+- ! Ask **ONE** focused, non-trivial question per step
+- ⊗ ask more than one question per step; or try to sneak-in "also" questions
 - ~ Provide numbered answer options when appropriate
 - ! Include "other" option for custom/unknown responses
 - ! make it clear which option you feel is RECOMMENDED

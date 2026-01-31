@@ -5,6 +5,34 @@ All notable changes to the Deft framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] - 2026-01-31
+
+### Changed
+- **TUI UX Improvements**: Enhanced form design and user experience
+  - Replaced all y/n text inputs with checkboxes for boolean options
+  - Converted multi-selection fields to checkboxes (programming languages, project types)
+  - BootstrapScreen: Programming languages and experimental rules now use checkboxes
+  - ProjectScreen: Project types and primary language now use checkboxes
+  - Fixed button visibility: Moved Submit/Cancel buttons outside ScrollableContainer
+  - Added CSS styling to make buttons auto-sized (not 50% of screen)
+  - Consistent TUI pattern: checkboxes for boolean/multi-choice, buttons for actions, inputs for text only
+- **TUI Navigation**: Fixed markdown viewer navigation for internal links
+  - Added history tracking to README, CHANGELOG, and Main.md viewers
+  - Fixed SKILL.md link issue (was being converted to http://SKILL.md domain)
+  - Internal .md links now navigate within viewer instead of opening browser
+  - External http/https URLs still open in browser as expected
+  - ESC key navigates back through document history or returns to menu
+  - 'q' key always returns to menu from any document
+- **TUI Documentation**: Added CHANGELOG and Main.md viewers to menu
+  - New menu options after README for viewing CHANGELOG.md and main.md
+  - All three markdown viewers support full navigation and history
+
+### Fixed
+- **TUI Import Error**: Removed Slider widget import (not available in Textual 7.5.0)
+  - Slider widget attempted but not available in current Textual version
+  - Reverted coverage threshold back to Input fields
+  - TUI now launches properly with `./run` command
+
 ## [0.4.1] - 2026-01-31
 
 ### Changed

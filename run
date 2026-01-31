@@ -16,7 +16,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Optional
 
-VERSION = "0.4.1"
+VERSION = "0.4.2"
 
 # Try to import rich for enhanced experience
 try:
@@ -47,7 +47,7 @@ except ImportError:
 try:
     from textual.app import App, ComposeResult
     from textual.screen import Screen
-    from textual.widgets import Header, Footer, Button, Label, Input, Select, OptionList, Static, MarkdownViewer
+    from textual.widgets import Header, Footer, Button, Label, Input, Select, OptionList, Static, MarkdownViewer, Checkbox
     from textual.widgets._option_list import Option
     from textual.containers import Container, Horizontal, Vertical, ScrollableContainer
     HAS_TEXTUAL = True
@@ -362,6 +362,31 @@ def cmd_bootstrap(args: List[str]):
     print_section("Custom Rules")
     custom_rules = read_input("Any custom rules or preferences (optional, press Enter to skip)")
     
+    print()
+    print_section("Experimental Rules")
+    info("The meta/ directory contains experimental guidelines:")
+    info("  • SOUL.md       - Strategic context and purpose-driven guidance")
+    info("  • morals.md     - Ethical AI development principles")
+    info("  • code-field.md - Advanced field theory for code architecture")
+    print()
+    
+    use_soul = read_yn("Use meta/SOUL.md? (Strategic context guidelines)")
+    use_morals = read_yn("Use meta/morals.md? (Ethical AI principles)")
+    use_code_field = read_yn("Use meta/code-field.md? (Advanced architecture theory)")
+    
+    # Build experimental rules section
+    experimental_rules = []
+    if use_soul:
+        experimental_rules.append("- ! Use meta/SOUL.md for strategic context and purpose-driven guidance")
+    if use_morals:
+        experimental_rules.append("- ! Use meta/morals.md for ethical AI development principles")
+    if use_code_field:
+        experimental_rules.append("- ~ Use meta/code-field.md for advanced architecture patterns")
+    
+    experimental_section = ""
+    if experimental_rules:
+        experimental_section = "\n## Experimental Rules\n\n" + "\n".join(experimental_rules)
+    
     # Generate user.md
     user_content = f"""# User Preferences
 
@@ -383,6 +408,7 @@ Address the user as: **{user_name}**
 ## Custom Rules
 
 {custom_rules if custom_rules else "No custom rules defined yet."}
+{experimental_section}
 
 ## Workflow Preferences
 
@@ -1049,7 +1075,10 @@ if HAS_TEXTUAL:
                     Option("Doctor ...... Check system dependencies", id="doctor"),
                     Option("", id="sep2", disabled=True),
                     Option("README ...... View framework documentation", id="readme"),
+                    Option("CHANGELOG ... View version history", id="changelog"),
+                    Option("Main.md ..... View main framework guide", id="mainmd"),
                     Option("Help ........ Show help", id="help"),
+                    Option("", id="sep3", disabled=True),
                     Option("Exit ........ Quit wizard", id="exit"),
                     id="menu"
                 )
@@ -1064,6 +1093,10 @@ if HAS_TEXTUAL:
                 self.app.push_screen("help")
             elif option_id == "readme":
                 self.app.push_screen("readme")
+            elif option_id == "changelog":
+                self.app.push_screen("changelog")
+            elif option_id == "mainmd":
+                self.app.push_screen("mainmd")
             elif option_id == "bootstrap":
                 self.app.push_screen("bootstrap")
             elif option_id == "project":
@@ -1087,23 +1120,40 @@ if HAS_TEXTUAL:
         
         BINDINGS = [("escape", "cancel", "Cancel")]
         
+        CSS = """
+        BootstrapScreen Horizontal {
+            height: auto;
+        }
+        BootstrapScreen #status {
+            height: auto;
+        }
+        """
+        
         def compose(self) -> ComposeResult:
             yield Header()
             with ScrollableContainer():
                 yield Label("Bootstrap - User Preferences Setup")
                 yield Label("Your name (how AI should address you):")
                 yield Input(id="name", placeholder="Your name")
-                yield Label("Default coverage threshold (%):")
+                yield Label("\nDefault coverage threshold (%):")
                 yield Input(id="coverage", placeholder="85", value="85")
-                yield Label("Primary languages (comma-separated):")
-                yield Label("  1=Python, 2=Go, 3=TypeScript, 4=C++, 5=Other")
-                yield Input(id="languages", placeholder="1,3")
-                yield Label("Custom rules (optional):")
+                yield Label("\nPrimary languages:")
+                yield Checkbox("Python", id="lang_python")
+                yield Checkbox("Go", id="lang_go")
+                yield Checkbox("TypeScript", id="lang_typescript")
+                yield Checkbox("C++", id="lang_cpp")
+                yield Checkbox("Rust", id="lang_rust")
+                yield Checkbox("Java", id="lang_java")
+                yield Label("\nCustom rules (optional):")
                 yield Input(id="rules", placeholder="Press Enter to skip")
-                with Horizontal():
-                    yield Button("Submit", variant="primary", id="submit")
-                    yield Button("Cancel", id="cancel")
-                yield Label("", id="status")
+                yield Label("\nExperimental Rules:")
+                yield Checkbox("Use meta/SOUL.md (Strategic context)", id="use_soul")
+                yield Checkbox("Use meta/morals.md (Ethical AI)", id="use_morals")
+                yield Checkbox("Use meta/code-field.md (Advanced arch)", id="use_code_field")
+            with Horizontal():
+                yield Button("Submit", variant="primary", id="submit")
+                yield Button("Cancel", id="cancel")
+            yield Label("", id="status")
             yield Footer()
         
         def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -1118,18 +1168,45 @@ if HAS_TEXTUAL:
         def handle_submit(self) -> None:
             name = self.query_one("#name", Input).value.strip()
             coverage = self.query_one("#coverage", Input).value.strip() or "85"
-            lang_selection = self.query_one("#languages", Input).value.strip()
             custom_rules = self.query_one("#rules", Input).value.strip()
+            
+            # Get language selections from checkboxes
+            languages = []
+            if self.query_one("#lang_python", Checkbox).value:
+                languages.append("- Python")
+            if self.query_one("#lang_go", Checkbox).value:
+                languages.append("- Go")
+            if self.query_one("#lang_typescript", Checkbox).value:
+                languages.append("- TypeScript")
+            if self.query_one("#lang_cpp", Checkbox).value:
+                languages.append("- C++")
+            if self.query_one("#lang_rust", Checkbox).value:
+                languages.append("- Rust")
+            if self.query_one("#lang_java", Checkbox).value:
+                languages.append("- Java")
+            languages_str = '\n'.join(languages) if languages else "- (None specified)"
+            
+            # Get experimental rules preferences from checkboxes
+            use_soul = self.query_one("#use_soul", Checkbox).value
+            use_morals = self.query_one("#use_morals", Checkbox).value
+            use_code_field = self.query_one("#use_code_field", Checkbox).value
             
             if not name:
                 self.query_one("#status", Label).update("[red]Error: Name is required[/red]")
                 return
             
-            # Map selections
-            lang_map = {"1": "Python", "2": "Go", "3": "TypeScript", "4": "C++", "5": "Other"}
-            lang_nums = [s.strip() for s in lang_selection.split(',') if s.strip()]
-            languages = [f"- {lang_map[num]}" for num in lang_nums if num in lang_map]
-            languages_str = '\n'.join(languages) if languages else "- (None specified)"
+            # Build experimental rules section
+            experimental_rules = []
+            if use_soul:
+                experimental_rules.append("- ! Use meta/SOUL.md for strategic context and purpose-driven guidance")
+            if use_morals:
+                experimental_rules.append("- ! Use meta/morals.md for ethical AI development principles")
+            if use_code_field:
+                experimental_rules.append("- ~ Use meta/code-field.md for advanced architecture patterns")
+            
+            experimental_section = ""
+            if experimental_rules:
+                experimental_section = "\n## Experimental Rules\n\n" + "\n".join(experimental_rules)
             
             # Generate user.md
             script_dir = get_script_dir()
@@ -1154,6 +1231,7 @@ Address the user as: **{name}**
 ## Custom Rules
 
 {custom_rules if custom_rules else "No custom rules defined yet."}
+{experimental_section}
 
 ## Workflow Preferences
 
@@ -1183,26 +1261,41 @@ Address the user as: **{name}**
         
         BINDINGS = [("escape", "cancel", "Cancel")]
         
+        CSS = """
+        ProjectScreen Horizontal {
+            height: auto;
+        }
+        ProjectScreen #status {
+            height: auto;
+        }
+        """
+        
         def compose(self) -> ComposeResult:
             yield Header()
             with ScrollableContainer():
                 yield Label("Project Configuration")
                 yield Label("Project name:")
                 yield Input(id="name", placeholder="My Project")
-                yield Label("Project type (comma-separated):")
-                yield Label("  1=CLI, 2=TUI, 3=REST API, 4=Web App, 5=Library, 6=Other")
-                yield Input(id="type", placeholder="1,3")
-                yield Label("Primary language:")
-                yield Label("  1=Python, 2=Go, 3=TypeScript, 4=C++")
-                yield Input(id="language", placeholder="1", value="1")
-                yield Label("Coverage threshold (%):")
+                yield Label("\nProject type (select all that apply):")
+                yield Checkbox("CLI", id="type_cli")
+                yield Checkbox("TUI", id="type_tui")
+                yield Checkbox("REST API", id="type_api")
+                yield Checkbox("Web App", id="type_webapp")
+                yield Checkbox("Library", id="type_library")
+                yield Checkbox("Other", id="type_other")
+                yield Label("\nPrimary language:")
+                yield Checkbox("Python", id="lang_python", value=True)
+                yield Checkbox("Go", id="lang_go")
+                yield Checkbox("TypeScript", id="lang_typescript")
+                yield Checkbox("C++", id="lang_cpp")
+                yield Label("\nCoverage threshold (%):")
                 yield Input(id="coverage", placeholder="85", value="85")
                 yield Label("Tech stack details (optional):")
                 yield Input(id="tech_stack", placeholder="Flask + SQLAlchemy")
-                with Horizontal():
-                    yield Button("Submit", variant="primary", id="submit")
-                    yield Button("Cancel", id="cancel")
-                yield Label("", id="status")
+            with Horizontal():
+                yield Button("Submit", variant="primary", id="submit")
+                yield Button("Cancel", id="cancel")
+            yield Label("", id="status")
             yield Footer()
         
         def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -1216,8 +1309,6 @@ Address the user as: **{name}**
         
         def handle_submit(self) -> None:
             project_name = self.query_one("#name", Input).value.strip()
-            type_selection = self.query_one("#type", Input).value.strip()
-            lang_num = self.query_one("#language", Input).value.strip() or "1"
             coverage = self.query_one("#coverage", Input).value.strip() or "85"
             tech_stack = self.query_one("#tech_stack", Input).value.strip()
             
@@ -1225,14 +1316,33 @@ Address the user as: **{name}**
                 self.query_one("#status", Label).update("[red]Error: Project name is required[/red]")
                 return
             
-            # Map selections
-            type_map = {"1": "CLI", "2": "TUI", "3": "REST API", "4": "Web App", "5": "Library", "6": "Other"}
-            type_nums = [s.strip() for s in type_selection.split(',') if s.strip()]
-            project_types = [type_map[num] for num in type_nums if num in type_map]
+            # Get project types from checkboxes
+            project_types = []
+            if self.query_one("#type_cli", Checkbox).value:
+                project_types.append("CLI")
+            if self.query_one("#type_tui", Checkbox).value:
+                project_types.append("TUI")
+            if self.query_one("#type_api", Checkbox).value:
+                project_types.append("REST API")
+            if self.query_one("#type_webapp", Checkbox).value:
+                project_types.append("Web App")
+            if self.query_one("#type_library", Checkbox).value:
+                project_types.append("Library")
+            if self.query_one("#type_other", Checkbox).value:
+                project_types.append("Other")
             project_types_str = ", ".join(project_types) if project_types else "Application"
             
-            plang_map = {"1": "Python", "2": "Go", "3": "TypeScript", "4": "C++"}
-            primary_lang = plang_map.get(lang_num, "Python")
+            # Get primary language from checkboxes (first selected)
+            languages = []
+            if self.query_one("#lang_python", Checkbox).value:
+                languages.append("Python")
+            if self.query_one("#lang_go", Checkbox).value:
+                languages.append("Go")
+            if self.query_one("#lang_typescript", Checkbox).value:
+                languages.append("TypeScript")
+            if self.query_one("#lang_cpp", Checkbox).value:
+                languages.append("C++")
+            primary_lang = languages[0] if languages else "Python"
             
             tech_stack_str = f" - {tech_stack}" if tech_stack else ""
             today = datetime.now().strftime("%Y-%m-%d")
@@ -1743,7 +1853,11 @@ No custom rules defined yet.
     class ReadmeScreen(Screen):
         """View README.md with markdown rendering."""
         
-        BINDINGS = [("escape", "back", "Back"), ("q", "back", "Back")]
+        BINDINGS = [("escape", "back", "Back"), ("q", "quit", "Menu")]
+        
+        def __init__(self):
+            super().__init__()
+            self.history = []  # Track navigation history
         
         def compose(self) -> ComposeResult:
             yield Header()
@@ -1760,10 +1874,229 @@ No custom rules defined yet.
                 try:
                     viewer = self.query_one(MarkdownViewer)
                     viewer.document.update(readme_file.read_text(encoding='utf-8'))
+                    self.history = [readme_file]  # Initialize with starting doc
                 except:
                     pass
         
+        def on_markdown_link_clicked(self, event) -> None:
+            """Handle markdown link clicks - navigate to other markdown files or open external URLs."""
+            href = event.href
+            
+            # Check if this is a real external URL (contains ://) but exclude file:// and others
+            # Also check it's not a .md file that got URL-ified (e.g., SKILL.md -> http://SKILL.md)
+            is_external_url = (href and 
+                             ('://' in href) and 
+                             href.startswith(('http://', 'https://')) and
+                             not href.split('://', 1)[1].endswith('.md'))
+            
+            # Let real external URLs open in browser
+            if is_external_url:
+                return  # Don't prevent default - let it open
+            
+            # Prevent default for all other links (including .md files that got URL-ified)
+            event.prevent_default()
+            
+            # Handle internal markdown links
+            if href and not href.startswith('mailto:'):
+                # Extract just the filename if it got converted to a URL
+                if '://' in href and href.split('://', 1)[1].endswith('.md'):
+                    href = href.split('://', 1)[1].lstrip('/')
+                
+                if href.endswith('.md'):
+                    # Load the linked markdown file
+                    script_dir = get_script_dir()
+                    target_file = script_dir / href
+                    if target_file.exists():
+                        try:
+                            viewer = self.query_one(MarkdownViewer)
+                            viewer.document.update(target_file.read_text(encoding='utf-8'))
+                            self.history.append(target_file)  # Add to history
+                        except:
+                            pass
+        
         def action_back(self) -> None:
+            """Go back to previous document or menu if no history."""
+            if len(self.history) > 1:
+                # Remove current document and go back to previous
+                self.history.pop()
+                prev_file = self.history[-1]
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(prev_file.read_text(encoding='utf-8'))
+                except:
+                    pass
+            else:
+                # No history, return to menu
+                self.app.pop_screen()
+        
+        def action_quit(self) -> None:
+            """Return to menu."""
+            self.app.pop_screen()
+    
+    class ChangelogScreen(Screen):
+        """View CHANGELOG.md with markdown rendering."""
+        
+        BINDINGS = [("escape", "back", "Back"), ("q", "quit", "Menu")]
+        
+        def __init__(self):
+            super().__init__()
+            self.history = []  # Track navigation history
+        
+        def compose(self) -> ComposeResult:
+            yield Header()
+            changelog_file = get_script_dir() / "CHANGELOG.md"
+            if changelog_file.exists():
+                yield MarkdownViewer()
+            else:
+                yield Static("[red]CHANGELOG.md not found[/red]")
+            yield Footer()
+        
+        def on_mount(self) -> None:
+            changelog_file = get_script_dir() / "CHANGELOG.md"
+            if changelog_file.exists():
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(changelog_file.read_text(encoding='utf-8'))
+                    self.history = [changelog_file]  # Initialize with starting doc
+                except:
+                    pass
+        
+        def on_markdown_link_clicked(self, event) -> None:
+            """Handle markdown link clicks - navigate to other markdown files or open external URLs."""
+            href = event.href
+            
+            # Check if this is a real external URL (contains ://) but exclude file:// and others
+            # Also check it's not a .md file that got URL-ified (e.g., SKILL.md -> http://SKILL.md)
+            is_external_url = (href and 
+                             ('://' in href) and 
+                             href.startswith(('http://', 'https://')) and
+                             not href.split('://', 1)[1].endswith('.md'))
+            
+            # Let real external URLs open in browser
+            if is_external_url:
+                return  # Don't prevent default - let it open
+            
+            # Prevent default for all other links (including .md files that got URL-ified)
+            event.prevent_default()
+            
+            # Handle internal markdown links
+            if href and not href.startswith('mailto:'):
+                # Extract just the filename if it got converted to a URL
+                if '://' in href and href.split('://', 1)[1].endswith('.md'):
+                    href = href.split('://', 1)[1].lstrip('/')
+                
+                if href.endswith('.md'):
+                    # Load the linked markdown file
+                    script_dir = get_script_dir()
+                    target_file = script_dir / href
+                    if target_file.exists():
+                        try:
+                            viewer = self.query_one(MarkdownViewer)
+                            viewer.document.update(target_file.read_text(encoding='utf-8'))
+                            self.history.append(target_file)  # Add to history
+                        except:
+                            pass
+        
+        def action_back(self) -> None:
+            """Go back to previous document or menu if no history."""
+            if len(self.history) > 1:
+                # Remove current document and go back to previous
+                self.history.pop()
+                prev_file = self.history[-1]
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(prev_file.read_text(encoding='utf-8'))
+                except:
+                    pass
+            else:
+                # No history, return to menu
+                self.app.pop_screen()
+        
+        def action_quit(self) -> None:
+            """Return to menu."""
+            self.app.pop_screen()
+    
+    class MainMdScreen(Screen):
+        """View main.md with markdown rendering."""
+        
+        BINDINGS = [("escape", "back", "Back"), ("q", "quit", "Menu")]
+        
+        def __init__(self):
+            super().__init__()
+            self.history = []  # Track navigation history
+        
+        def compose(self) -> ComposeResult:
+            yield Header()
+            mainmd_file = get_script_dir() / "main.md"
+            if mainmd_file.exists():
+                yield MarkdownViewer()
+            else:
+                yield Static("[red]main.md not found[/red]")
+            yield Footer()
+        
+        def on_mount(self) -> None:
+            mainmd_file = get_script_dir() / "main.md"
+            if mainmd_file.exists():
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(mainmd_file.read_text(encoding='utf-8'))
+                    self.history = [mainmd_file]  # Initialize with starting doc
+                except:
+                    pass
+        
+        def on_markdown_link_clicked(self, event) -> None:
+            """Handle markdown link clicks - navigate to other markdown files or open external URLs."""
+            href = event.href
+            
+            # Check if this is a real external URL (contains ://) but exclude file:// and others
+            # Also check it's not a .md file that got URL-ified (e.g., SKILL.md -> http://SKILL.md)
+            is_external_url = (href and 
+                             ('://' in href) and 
+                             href.startswith(('http://', 'https://')) and
+                             not href.split('://', 1)[1].endswith('.md'))
+            
+            # Let real external URLs open in browser
+            if is_external_url:
+                return  # Don't prevent default - let it open
+            
+            # Prevent default for all other links (including .md files that got URL-ified)
+            event.prevent_default()
+            
+            # Handle internal markdown links
+            if href and not href.startswith('mailto:'):
+                # Extract just the filename if it got converted to a URL
+                if '://' in href and href.split('://', 1)[1].endswith('.md'):
+                    href = href.split('://', 1)[1].lstrip('/')
+                
+                if href.endswith('.md'):
+                    # Load the linked markdown file
+                    script_dir = get_script_dir()
+                    target_file = script_dir / href
+                    if target_file.exists():
+                        try:
+                            viewer = self.query_one(MarkdownViewer)
+                            viewer.document.update(target_file.read_text(encoding='utf-8'))
+                            self.history.append(target_file)  # Add to history
+                        except:
+                            pass
+        
+        def action_back(self) -> None:
+            """Go back to previous document or menu if no history."""
+            if len(self.history) > 1:
+                # Remove current document and go back to previous
+                self.history.pop()
+                prev_file = self.history[-1]
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(prev_file.read_text(encoding='utf-8'))
+                except:
+                    pass
+            else:
+                # No history, return to menu
+                self.app.pop_screen()
+        
+        def action_quit(self) -> None:
+            """Return to menu."""
             self.app.pop_screen()
     
     class HelpScreen(Screen):
@@ -1858,6 +2191,8 @@ For more information: https://github.com/visionik/deft
             "validate": ValidateScreen,
             "doctor": DoctorScreen,
             "readme": ReadmeScreen,
+            "changelog": ChangelogScreen,
+            "mainmd": MainMdScreen,
             "help": HelpScreen,
         }
         
