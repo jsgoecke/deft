@@ -189,14 +189,14 @@ def ask_input(prompt_text: str, default: str = "") -> str:
         # Priority: prompt_toolkit (best editing) > rich > basic input
         if HAS_PROMPT_TOOLKIT:
             from prompt_toolkit import prompt as pt_prompt
+            from prompt_toolkit.formatted_text import HTML
             # Add colored prefix if rich is also available
             if HAS_RICH:
-                prefix = "\033[36m?\033[0m "  # Cyan question mark with ANSI codes
-                display_prompt = f"{prefix}{prompt_text}"
+                display_prompt = HTML(f'<ansibrightcyan>?</ansibrightcyan> {prompt_text}: ')
             else:
-                display_prompt = prompt_text
+                display_prompt = prompt_text + ": "
             
-            value = pt_prompt(display_prompt + ": ", default=default)
+            value = pt_prompt(display_prompt, default=default)
             return value if value else default
         elif HAS_RICH:
             # Add colored question mark prefix
@@ -260,15 +260,15 @@ def ask_confirm(prompt_text: str, default: bool = False) -> bool:
         # Priority: prompt_toolkit > rich > basic input
         if HAS_PROMPT_TOOLKIT:
             from prompt_toolkit import prompt as pt_prompt
+            from prompt_toolkit.formatted_text import HTML
             # Add colored prefix if rich is also available
-            if HAS_RICH:
-                prefix = "\033[36m?\033[0m "  # Cyan question mark with ANSI codes
-                display_prompt = f"{prefix}{prompt_text}"
-            else:
-                display_prompt = prompt_text
-            
             suffix = " (Y/n): " if default else " (y/N): "
-            response = pt_prompt(display_prompt + suffix, default="")
+            if HAS_RICH:
+                display_prompt = HTML(f'<ansibrightcyan>?</ansibrightcyan> {prompt_text}{suffix}')
+            else:
+                display_prompt = prompt_text + suffix
+            
+            response = pt_prompt(display_prompt, default="")
             if not response:
                 return default
             return response.strip().lower() in ('y', 'yes')
