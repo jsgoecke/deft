@@ -367,8 +367,7 @@ Address the user as: **{user_name}**
 
 def cmd_project(args: List[str]):
     """Project command - configure project.md"""
-    print()
-    info("=== Deft Project Configuration ===")
+    print_header(f"Deft v{VERSION} - Project Configuration")
     print()
     info("This command creates project.md, which defines YOUR project's specifics:")
     info("  • Tech stack and programming language")
@@ -522,8 +521,7 @@ ls secrets/
 
 def cmd_spec(args: List[str]):
     """Spec command - generate specification via interview"""
-    print()
-    info("=== Deft Specification Generator ===")
+    print_header(f"Deft v{VERSION} - Specification Generator")
     print()
     info("This command creates PRD.md (Product Requirements Document) with:")
     info("  • Your project's core features and requirements")
@@ -630,8 +628,7 @@ def cmd_install(args: List[str]):
     """Install command - install deft framework in a project"""
     target_dir = Path(args[0]) if args else Path(".")
     
-    print()
-    info("=== Deft Installation ===")
+    print_header(f"Deft v{VERSION} - Installation")
     print()
     info("This command installs the Deft framework in your project directory.")
     info("It will create:")
@@ -850,8 +847,7 @@ def cmd_update(args: List[str]):
 
 def cmd_reset(args: List[str]):
     """Reset command - reset configuration files to default/empty state"""
-    print()
-    info("=== Deft Reset ===")
+    print_header(f"Deft v{VERSION} - Reset")
     print()
     info("This command resets deft configuration files to their default state.")
     info("You can choose which files to reset:")
