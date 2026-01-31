@@ -23,6 +23,7 @@ try:
     from rich.console import Console
     from rich.prompt import Prompt, Confirm
     from rich.panel import Panel
+    from rich.rule import Rule
     from rich.text import Text
     HAS_RICH = True
     console = Console()
@@ -44,13 +45,22 @@ except ImportError:
 
 # Output helpers
 def print_header(text: str):
-    """Print section header"""
+    """Print main command header"""
     if HAS_RICH:
         console.print(Panel(f"[bold cyan]{text}[/bold cyan]", border_style="cyan"))
     else:
         print(f"\n{'=' * 60}")
         print(f"  {text}")
         print('=' * 60)
+
+def print_section(text: str):
+    """Print section header within a command"""
+    if HAS_RICH:
+        console.rule(f"[cyan]{text}[/cyan]")
+    else:
+        print(f"\n{'-' * 60}")
+        print(f"  {text}")
+        print('-' * 60)
 
 def print_info(msg: str):
     """Print info message"""
@@ -267,16 +277,14 @@ def cmd_bootstrap(args: List[str]):
             return 0
     
     print()
-    print_header("User Preferences Setup")
-    print()
+    print_section("User Preferences Setup")
     
     # Gather user information
     user_name = read_input("Your name (how AI should address you)")
     coverage = read_input("Default coverage threshold (default: 85%)", "85")
     
     print()
-    print_header("Programming Languages")
-    print()
+    print_section("Programming Languages")
     info("Select your primary programming languages (comma-separated):")
     print("  1. Python")
     print("  2. Go")
@@ -303,8 +311,7 @@ def cmd_bootstrap(args: List[str]):
     languages_str = '\n'.join(languages) if languages else "- (None specified)"
     
     print()
-    print_header("Custom Rules")
-    print()
+    print_section("Custom Rules")
     custom_rules = read_input("Any custom rules or preferences (optional, press Enter to skip)")
     
     # Generate user.md
