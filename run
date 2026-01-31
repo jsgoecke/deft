@@ -254,7 +254,7 @@ read_yn = ask_confirm
 
 def cmd_bootstrap(args: List[str]):
     """Bootstrap command - set up user.md"""
-    info("Deft Bootstrap - User Preferences Setup")
+    print_header(f"Deft v{VERSION} - Bootstrap")
     print()
     
     script_dir = get_script_dir()
@@ -266,10 +266,16 @@ def cmd_bootstrap(args: List[str]):
         if not read_yn("Overwrite existing user.md?"):
             return 0
     
+    print()
+    print_header("User Preferences Setup")
+    print()
+    
     # Gather user information
     user_name = read_input("Your name (how AI should address you)")
     coverage = read_input("Default coverage threshold (default: 85%)", "85")
     
+    print()
+    print_header("Programming Languages")
     print()
     info("Select your primary programming languages (comma-separated):")
     print("  1. Python")
@@ -296,6 +302,8 @@ def cmd_bootstrap(args: List[str]):
     
     languages_str = '\n'.join(languages) if languages else "- (None specified)"
     
+    print()
+    print_header("Custom Rules")
     print()
     custom_rules = read_input("Any custom rules or preferences (optional, press Enter to skip)")
     
