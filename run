@@ -1039,18 +1039,18 @@ if HAS_TEXTUAL:
             yield Header()
             yield Container(
                 OptionList(
-                    Option("Bootstrap - Set up user preferences", id="bootstrap"),
-                    Option("Project - Create project configuration", id="project"),
-                    Option("Spec - Generate specification", id="spec"),
-                    Option("Install - Install deft in directory", id="install"),
-                    Option("---", id="sep1", disabled=True),
-                    Option("Reset - Reset configuration files", id="reset"),
-                    Option("Validate - Check configuration", id="validate"),
-                    Option("Doctor - Check system dependencies", id="doctor"),
-                    Option("---", id="sep2", disabled=True),
-                    Option("README - View framework documentation", id="readme"),
-                    Option("Help - Show help", id="help"),
-                    Option("Exit - Quit wizard", id="exit"),
+                    Option("Bootstrap .......... Set up user preferences", id="bootstrap"),
+                    Option("Project ............ Create project configuration", id="project"),
+                    Option("Spec ............... Generate specification", id="spec"),
+                    Option("Install ............ Install deft in directory", id="install"),
+                    Option("", id="sep1", disabled=True),
+                    Option("Reset .............. Reset configuration files", id="reset"),
+                    Option("Validate ........... Check configuration", id="validate"),
+                    Option("Doctor ............. Check system dependencies", id="doctor"),
+                    Option("", id="sep2", disabled=True),
+                    Option("README ............. View framework documentation", id="readme"),
+                    Option("Help ............... Show help", id="help"),
+                    Option("Exit ............... Quit wizard", id="exit"),
                     id="menu"
                 )
             )
