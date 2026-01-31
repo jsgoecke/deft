@@ -16,7 +16,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Optional
 
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 
 # Try to import rich for enhanced experience
 try:

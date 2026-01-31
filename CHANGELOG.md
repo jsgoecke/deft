@@ -5,6 +5,36 @@ All notable changes to the Deft framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2026-01-31
+
+### Changed
+- **Documentation Optimization**: Reduced token usage across core documentation files
+  - SKILL.md: 451 → 170 lines (62% reduction) - Removed redundant workflow examples, kept core concepts
+  - github.md: 640 → 254 lines (60% reduction) - Removed CLI command reference, kept best practices and templates
+  - git.md: 378 → 139 lines (63% reduction) - Removed basic command examples, kept standards and safety rules
+  - telemetry.md: 337 → 254 lines (25% reduction) - Condensed tool examples while keeping Sentry config
+  - Total: ~989 lines removed (55% overall reduction) while preserving all essential standards
+- **Testing Standards**: Enhanced test-first development requirements
+  - Added "Test-First Development" section to testing.md with mandatory test coverage rules
+  - Implementation now INCOMPLETE until tests written AND `task test:coverage` passes
+  - New functions/classes MUST have tests in same commit
+  - Modified functions MUST update existing tests
+  - Added test coverage anti-patterns to coding.md and testing.md
+- **GitHub Standards**: Added post-1.0.0 issue linking guidelines
+  - MUST link commits to issues for: features, bugs, breaking changes, architecture decisions
+  - SHOULD NOT create issues for: typos, formatting, dependency bumps, refactoring
+  - SHOULD create issues for: searchable items or items needing discussion
+- **Taskfile Standards**: Added common task commands reference
+  - Moved from coding.md to tools/taskfile.md for better organization
+  - Includes: fmt, lint, test, test:coverage, quality, check, build
+- **SKILL.md Updates**: 
+  - Changed all `./run` and `deft.sh` references to `deft/run` for consistency
+  - Added first-use bootstrap guidance for existing projects
+  - Reduced from 451 to 170 lines while keeping all essential information
+
+### Fixed
+- **Documentation Consistency**: Aligned command references across all files to use `deft/run` prefix
+
 ## [0.4.0] - 2026-01-31
 
 ### Added

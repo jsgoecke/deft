@@ -63,362 +63,81 @@ specification.md ← LOWEST precedence (requirements)
 
 Deft projects use **Taskfile** as the universal task runner.
 
-### Discovery
 ```bash
 task --list        # See all available tasks
-task               # Same as task --list
+task check         # CRITICAL: Run before EVERY commit
 ```
 
-### Common Tasks
-```bash
-task check         # Pre-commit checks (fmt, lint, test, coverage)
-task test          # Run tests
-task test:coverage # Run with coverage
-task fmt           # Format code
-task lint          # Lint code
-task build         # Build project
-task clean         # Clean artifacts
-```
+See `./deft/tools/taskfile.md` for complete task standards and common commands.
 
-**CRITICAL**: Before commits, ALWAYS run `task check`. Never claim checks passed without running them.
+## Development Methodology
 
-## Test-Driven Development (TDD)
+**Test-Driven Development (TDD)**:
+1. Write test first → Watch it fail → Implement → Refactor → Repeat
+2. Default: ≥85% coverage (check `project.md` for overrides)
+3. Implementation is INCOMPLETE until tests pass
 
-Deft embraces TDD by default:
+**Spec-Driven Development (SDD)** for new features/projects:
+1. Run `deft/run spec` to generate PRD.md via AI interview
+2. Review PRD.md → Generate SPECIFICATION.md → Review → Implement
 
-1. **Write test first** - Define expected behavior
-2. **Watch it fail** - Confirm test fails correctly
-3. **Implement** - Write minimal code to pass
-4. **Refactor** - Improve while keeping tests green
-5. **Repeat** - Build incrementally
-
-**Coverage Requirements**:
-- Default: ≥85% coverage (overall + per-module)
-- Check `project.md` for project-specific thresholds
-- Never claim coverage passes without running `task test:coverage`
-
-## Spec-Driven Development (SDD)
-
-For new features or projects:
-
-1. **Build PRD.md** - Run `deft.sh spec` to create Product Requirements Document
-2. **AI Interview** - Answer focused questions to clarify requirements
-3. **PRD.md Review** - Let user review/change PRD.md if they want
-4. **Generate SPECIFICATION.md** - use PRD.md + Deft rules to build a complete spec with phases, dependencies, and tasks
-5. **SPECIFICATION.md review** -- Let user review/change SPECIFICATION.md if they want
-5. **Implement** - Build according to spec, following all applicable deft rules
+See `./deft/coding/testing.md` for complete testing standards.
 
 ## Quality Standards
 
-### Before Every Commit
+**Before Every Commit**:
 ```bash
-task check  # MUST run this
+task check  # MUST run: fmt, lint, type check, test, coverage
 ```
 
-This typically includes:
-- Code formatting
-- Linting
-- Type checking
-- Tests with coverage
-- Any project-specific checks
+**Conventional Commits**: Use https://www.conventionalcommits.org/en/v1.0.0/ format
+**File Naming**: Use hyphens (e.g., `user-service.py`), not underscores
+**Secrets**: Store in `secrets/` directory with `.example` templates
 
-### Conventional Commits
-ALL commits must follow https://www.conventionalcommits.org/en/v1.0.0/:
-
-```
-feat: add new feature
-fix: resolve bug
-docs: update documentation
-chore: routine tasks
-test: add/update tests
-refactor: code restructuring
-```
-
-### File Naming
-- Use **hyphens** in filenames, not underscores
-- Example: `user-service.py` NOT `user_service.py`
-- Exception: Language conventions (Python modules can use underscores in code)
-
-### Secrets Management
-- Store secrets in `secrets/` directory
-- Provide `.example` templates
-- Never commit actual secrets
-- Use environment variables in code
+See `./deft/coding/coding.md` and `./deft/scm/git.md` for complete standards.
 
 ## Language-Specific Standards
 
-### Python
-- Testing: pytest, ≥85% coverage
-- Style: ruff, black, isort (PEP 8)
-- Types: mypy strict mode
-- Docs: PEP 257 docstrings
+All languages require ≥85% test coverage. See language-specific files:
+- `./deft/languages/python.md`
+- `./deft/languages/go.md`
+- `./deft/languages/typescript.md`
+- `./deft/languages/cpp.md`
 
-### Go
-- Testing: Testify, ≥85% coverage
-- Docs: go.dev/doc/comment
-- Patterns: table-driven tests, interface design
+## New Project Setup
 
-### TypeScript
-- Testing: Vitest/Jest, ≥85% coverage
-- Style: ESLint, Prettier
-- Types: strict mode, no `any`
-
-### C++
-- Testing: Catch2/GoogleTest, ≥85% coverage
-- Standard: C++20/23
-- Style: clang-format, clang-tidy
-
-## New Project Workflow
-
-When user says "start a new project with deft", "use deft to build X", or similar, follow this complete workflow:
-
-### Step 1: Initialize Deft Structure
+**Initialize new project**:
 ```bash
-./deft.sh init
-```
-- Creates `./deft/` directory with framework files
-- Sets up `secrets/` directory
-- Creates basic `Taskfile.yml`
-- Adds `.gitignore` for secrets
-
-### Step 2: User Configuration (First Time Only)
-Check if `./deft/core/user.md` exists. If not:
-```bash
-./deft.sh bootstrap
-```
-- Prompts for user name
-- Sets default coverage threshold
-- Configures primary languages
-- Creates personalized `user.md`
-
-### Step 3: Project Configuration
-```bash
-./deft.sh project
-```
-- Prompts for project name
-- Selects project type (CLI, TUI, REST API, Web App, Library, Other)
-- Chooses primary language
-- Sets coverage threshold
-- Creates `project.md` with standards
-
-### Step 4: Specification-Driven Development
-```bash
-./deft.sh spec
+deft/run init       # Create deft structure
+deft/run bootstrap  # User config (first time only)
+deft/run project    # Project config
+deft/run spec       # Generate PRD + SPECIFICATION (optional)
 ```
 
-This launches the full SDD workflow:
-
-**a) Generate PRD.md**:
-- Prompts for project name, description, and initial features
-- Creates `PRD.md` with structured template
-- Displays full path to PRD.md
-
-**b) Conduct AI Interview**:
-- Read the PRD.md thoroughly
-- Ask focused, non-trivial questions to clarify:
-  - Missing decisions and edge cases
-  - Implementation details and architecture
-  - UX considerations and constraints  
-  - Dependencies and tradeoffs
-- Each question should have numbered options plus "other"
-- Continue until ambiguity is minimized
-
-**c) User Review of PRD**:
-- Let user review/edit PRD.md if they want
-- Wait for confirmation before proceeding
-
-**d) Generate SPECIFICATION.md**:
-- Use PRD.md + deft rules to create complete implementation spec
-- Include clear phases, subphases, and tasks
-- Map dependencies (what blocks what)
-- Identify parallel work opportunities
-- NO code in specification - just the plan
-
-**e) User Review of Specification**:
-- Let user review/edit SPECIFICATION.md if they want
-- Wait for confirmation before implementation
-
-**f) Begin Implementation**:
-- Follow the SPECIFICATION.md plan
-- Apply all deft rules (TDD, quality standards, task-centric)
-- Maintain ≥85% coverage
-- Run `task check` before each commit
-- Use Conventional Commits format
-
-### Step 5: Development Cycle
-- Write tests first (TDD)
-- Implement features incrementally
-- Run `task check` frequently
-- Commit with proper format
-- Push changes
-
-## Project Initialization (Quick Reference)
-
-### For New Projects (Full Workflow)
-Use the "New Project Workflow" above when starting from scratch.
-
-### For Existing Deft Projects
-1. Check for `./deft/` directory
-2. Read `./deft/main.md` for general guidelines
-3. Read `./deft/core/user.md` for user preferences
-4. Read `./deft/core/project.md` for project rules
+**Work with existing deft project**:
+1. **First time?** If `./deft/core/user.md` doesn't exist, run `deft/run bootstrap`
+2. Read `./deft/main.md` (general guidelines)
+3. Read `./deft/core/user.md` (personal preferences - highest precedence)
+4. Read `./deft/core/project.md` (project rules)
 5. Run `task --list` to see available tasks
 
-### For New Features in Existing Projects
-1. Consider running `./deft.sh spec` for complex features
-2. Follow SDD process (PRD → Interview → Specification → Implement)
-3. Or for simple features, just follow TDD directly
+See `./deft/main.md` for complete workflow details.
 
-## Self-Improvement Mechanism
+## Self-Improvement
 
-Deft learns and evolves:
+Deft learns and evolves via `meta/` directory:
+- `lessons.md` - Patterns learned (AI can update)
+- `ideas.md` - Future improvements
+- `suggestions.md` - Project-specific suggestions
 
-- `meta/lessons.md` - Patterns learned during development (AI can update)
-- `meta/ideas.md` - Future improvements noticed
-- `meta/suggestions.md` - Project-specific suggestions
+## Platform Integration
 
-When you discover a better pattern or make repeated corrections, consider updating `lessons.md`.
+This SKILL.md follows the **AgentSkills specification**, compatible with:
+- **Claude Code**: `~/.claude/skills/deft/` or `.claude/skills/deft/`
+- **clawd.bot**: `~/.clawdbot/skills/deft/` or install via `clawdhub sync deft`
+- **Warp AI**: Upload to Warp Drive, reference in `WARP.md`/`AGENTS.md`
 
-## Safety and Best Practices
-
-### Version Control
-- Never force-push without explicit permission
-- Assume production impact unless stated otherwise
-- Prefer small, reversible changes
-- Call out risks explicitly
-
-### Code Quality
-- Run `task check` before EVERY commit
-- Verify tests pass: `task test`
-- Check coverage meets threshold: `task test:coverage`
-- Never claim checks passed without running them
-
-### Documentation
-- Keep docs in `docs/` directory, not project root
-- Update docs when changing behavior
-- Use RFC2119 notation in technical docs (!, ~, ?, ⊗, ≉)
-
-## Working with Deft
-
-### First Time in a Project
-1. Check for `./deft/` directory
-2. Read `./deft/main.md`
-3. Check `./deft/core/user.md` for user preferences
-4. Check `./deft/core/project.md` for project rules
-5. Run `task --list` to see available tasks
-
-### During Development
-1. Write tests first (TDD)
-2. Implement features
-3. Run `task check` frequently
-4. Before commit: ALWAYS `task check`
-5. Use Conventional Commits format
-6. Push changes
-
-### When Stuck
-- Check `./deft/REFERENCES.md` for guidance on which files to read
-- Review `meta/lessons.md` for learned patterns
-- Consult language-specific files in `./deft/languages/`
-- Check `Taskfile.yml` for available commands
-
-## Example Workflows
-
-### Starting a Feature
-```bash
-# 1. Write test first (TDD)
-# 2. Watch it fail
-task test
-
-# 3. Implement feature
-# 4. Run checks
-task check
-
-# 5. Commit
-git commit -m "feat: add new feature"
-```
-
-### Code Review
-```bash
-# 1. Run quality checks
-task check
-
-# 2. Review coverage
-task test:coverage
-
-# 3. Check commit format (Conventional Commits)
-git log --oneline -n 5
-
-# 4. Suggest improvements → meta/suggestions.md
-```
-
-### Bug Fix
-```bash
-# 1. Write failing test that reproduces bug
-# 2. Fix code
-# 3. Verify test passes
-task test
-
-# 4. Run full checks
-task check
-
-# 5. Commit
-git commit -m "fix: resolve issue with X"
-```
-
-## Integration Notes
-
-This SKILL.md follows the **AgentSkills specification**, making it compatible with multiple AI platforms.
-
-### With Claude Code
-- This SKILL.md file teaches Claude Code about deft
-- Place in `~/.claude/skills/deft/` (personal) or `.claude/skills/deft/` (project)
-- Claude automatically applies these rules when relevant
-- Works in VS Code via Claude Code extension
-
-### With clawd.bot
-- Compatible with clawd.bot's AgentSkills system
-- Place in `~/.clawdbot/skills/deft/` (shared) or `<workspace>/skills/deft/` (per-agent)
-- Install via ClawdHub: `clawdhub sync deft` (once published)
-- Works across WhatsApp, Telegram, Discord, and other channels
-- Requires `task` binary (specified in metadata)
-- Supports macOS and Linux (specified in `os` field)
-
-### With Warp AI
-- Upload deft files to Warp Drive
-- Create Warp rules referencing deft/*.md files
-- Use `WARP.md` or `AGENTS.md` in project root
-
-### Skill Locations
-
-**Claude Code**:
-- Personal: `~/.claude/skills/deft/SKILL.md`
-- Project: `.claude/skills/deft/SKILL.md`
-
-**clawd.bot**:
-- Shared (all agents): `~/.clawdbot/skills/deft/SKILL.md`
-- Per-agent: `<workspace>/skills/deft/SKILL.md`
-- Via registry: `clawdhub sync deft`
-
-**Deft files**: `./deft/*.md` (framework files)
-
-### Publishing to Registries
-
-**Claude Code Skills Marketplace**:
-- Browse: https://skillsmp.com
-- Submit via GitHub repository
-- Tag with `claude-skills`, `ai-coding`
-
-**ClawdHub** (clawd.bot):
-- Browse: https://clawdhub.com
-- Publish: `clawdhub publish`
-- Update: `clawdhub publish --version x.y.z`
-
-### Multi-Platform Benefits
-
-- **Same format** - Write once, use everywhere
-- **Consistent standards** - Deft rules apply across all AI assistants
-- **Universal workflows** - TDD, SDD, quality checks work in any context
-- **Shared knowledge** - Updates propagate to all platforms
+See `./deft/docs/claude-code-integration.md` for integration details.
 
 ## Quick Reference
 
@@ -430,10 +149,10 @@ This SKILL.md follows the **AgentSkills specification**, making it compatible wi
 | Check coverage | `task test:coverage` |
 | Format code | `task fmt` |
 | Lint code | `task lint` |
-| Initialize deft | `deft.sh init` |
-| Configure user | `deft.sh bootstrap` |
-| Configure project | `deft.sh project` |
-| Generate spec | `deft.sh spec` |
+| Initialize deft | `deft/run init` |
+| Configure user | `deft/run bootstrap` |
+| Configure project | `deft/run project` |
+| Generate spec | `deft/run spec` |
 
 ## Remember
 
