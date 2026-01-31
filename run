@@ -363,7 +363,8 @@ Address the user as: **{user_name}**
     print()
     
     # Always offer to configure project settings
-    info("Next: Configure project-specific settings")
+    print()
+    print_section("Next Steps")
     if read_yn("Would you like to run 'run project' now?"):
         print()
         return cmd_project([])
@@ -514,7 +515,9 @@ ls secrets/
     print()
     
     # Prompt to run spec generation
-    info("Next: Generate a detailed specification via AI interview.")
+    print()
+    print_section("Next Steps")
+    info("Generate a detailed specification via AI interview")
     info("The 'spec' command creates PRD.md with your project requirements,")
     info("which an AI assistant will use to interview you and generate SPECIFICATION.md.")
     print()
@@ -666,7 +669,7 @@ def cmd_install(args: List[str]):
             if not read_yn("Reinstall?"):
                 # Still offer to run project even if not reinstalling
                 print()
-                info("Next: Configure this project with project-specific settings.")
+                print_section("Next Steps")
                 if read_yn("Would you like to run 'run project' now?"):
                     print()
                     return cmd_project([])
@@ -739,7 +742,7 @@ tasks:
         print()
         
         # Prompt to run project configuration
-        info("Next: Configure this project with project-specific settings.")
+        print_section("Next Steps")
         if read_yn("Would you like to run 'run project' now?"):
             print()
             return cmd_project([])
