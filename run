@@ -47,7 +47,7 @@ except ImportError:
 try:
     from textual.app import App, ComposeResult
     from textual.screen import Screen
-    from textual.widgets import Header, Footer, Button, Label, Input, Select, OptionList, Static
+    from textual.widgets import Header, Footer, Button, Label, Input, Select, OptionList, Static, MarkdownViewer
     from textual.widgets._option_list import Option
     from textual.containers import Container, Horizontal, Vertical, ScrollableContainer
     HAS_TEXTUAL = True
@@ -1743,30 +1743,27 @@ No custom rules defined yet.
             self.app.pop_screen()
     
     class ReadmeScreen(Screen):
-        """View README.md."""
+        """View README.md with markdown rendering."""
         
-        BINDINGS = [("escape", "back", "Back")]
+        BINDINGS = [("escape", "back", "Back"), ("q", "back", "Back")]
         
         def compose(self) -> ComposeResult:
             yield Header()
-            with ScrollableContainer():
-                yield Static("", id="readme_content")
-                yield Button("Back to Menu", variant="primary", id="back")
+            readme_file = get_script_dir() / "README.md"
+            if readme_file.exists():
+                yield MarkdownViewer()
+            else:
+                yield Static("[red]README.md not found[/red]")
             yield Footer()
         
         def on_mount(self) -> None:
-            self.load_readme()
-        
-        def load_readme(self) -> None:
             readme_file = get_script_dir() / "README.md"
             if readme_file.exists():
-                content = readme_file.read_text(encoding='utf-8')
-                self.query_one("#readme_content", Static).update(content)
-            else:
-                self.query_one("#readme_content", Static).update("[red]README.md not found[/red]")
-        
-        def on_button_pressed(self, event: Button.Pressed) -> None:
-            self.app.pop_screen()
+                try:
+                    viewer = self.query_one(MarkdownViewer)
+                    viewer.document.update(readme_file.read_text(encoding='utf-8'))
+                except:
+                    pass
         
         def action_back(self) -> None:
             self.app.pop_screen()
