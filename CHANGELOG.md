@@ -5,6 +5,16 @@ All notable changes to the Deft framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3] - 2026-02-04
+
+### Added
+- **README Mermaid Diagrams**: Added 5 visual diagrams to improve documentation clarity
+  - Layer Precedence: Visual hierarchy from user.md to specification.md
+  - Continuous Improvement: Feedback loop showing framework evolution
+  - TDD Cycle: Classic red-green-refactor loop visualization
+  - SDD Flow: Spec-driven development from idea to multi-agent build
+  - Example Workflows: Three parallel workflow diagrams for new projects, existing projects, and code review
+
 ## [0.4.2] - 2026-01-31
 
 ### Changed
@@ -392,6 +402,9 @@ If you have custom scripts or references to deft files, update these paths:
 - Explore new interface guidelines if building CLIs, APIs, or UIs
 - Review enhanced language standards for Python, Go, TypeScript, and C++
 
+[0.4.3]: https://github.com/visionik/deft/releases/tag/v0.4.3
+[0.4.2]: https://github.com/visionik/deft/releases/tag/v0.4.2
+[0.4.1]: https://github.com/visionik/deft/releases/tag/v0.4.1
 [0.4.0]: https://github.com/visionik/deft/releases/tag/v0.4.0
 [0.3.7]: https://github.com/visionik/deft/releases/tag/v0.3.7
 [0.3.6]: https://github.com/visionik/deft/releases/tag/v0.3.6

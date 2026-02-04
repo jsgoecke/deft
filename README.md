@@ -64,19 +64,22 @@ This notation appears in technical standard files (python.md, go.md, etc.) for s
 
 Deft uses a layered architecture where more specific rules override general ones:
 
-```
-user.md          ← Highest precedence (personal preferences)
-  ↓
-project.md       ← Project-specific rules and workflows
-  ↓
-python.md        ← Language-specific standards
-go.md
-  ↓
-taskfile.md      ← Tool-specific guidelines
-  ↓
-main.md          ← General AI guidelines and agent behavior
-  ↓
-specification.md ← Lowest precedence (project requirements)
+```mermaid
+flowchart TB
+    subgraph Precedence ["Rule Precedence (High → Low)"]
+        U["🧑 user.md\nPersonal preferences"] --> P["📁 project.md\nProject rules"]
+        P --> L["🐍 python.md / go.md\nLanguage standards"]
+        L --> T["🔧 taskfile.md\nTool guidelines"]
+        T --> M["📖 main.md\nGeneral AI guidelines"]
+        M --> S["📋 specification.md\nProject requirements"]
+    end
+    
+    style U fill:#4ade80,stroke:#166534
+    style P fill:#60a5fa,stroke:#1e40af
+    style L fill:#f472b6,stroke:#9d174d
+    style T fill:#fbbf24,stroke:#b45309
+    style M fill:#a78bfa,stroke:#5b21b6
+    style S fill:#94a3b8,stroke:#475569
 ```
 
 ### 📁 Directory Structure
@@ -240,6 +243,26 @@ Rules cascade with precedence:
 
 The deft process evolves over time:
 
+```mermaid
+flowchart LR
+    subgraph Evolution ["📈 Continuous Improvement"]
+        direction LR
+        DEV["🔨 Development"] --> LEARN["💡 Learn Patterns"]
+        LEARN --> META["📝 Update Meta Files"]
+        META --> REFINE["⚙️ Refine Standards"]
+        REFINE --> DEV
+    end
+    
+    META --> L["lessons.md"]
+    META --> I["ideas.md"]
+    META --> S["suggestions.md"]
+    
+    style DEV fill:#dbeafe,stroke:#2563eb
+    style LEARN fill:#fef3c7,stroke:#d97706
+    style META fill:#e0e7ff,stroke:#4f46e5
+    style REFINE fill:#d1fae5,stroke:#059669
+```
+
 - AI updates `lessons.md` when learning better patterns
 - AI notes ideas in `ideas.md` for future consideration
 - AI suggests improvements in `suggestions.md`
@@ -271,6 +294,24 @@ task dev           # Start dev environment
 ### Test-Driven Development (TDD)
 
 Deft embraces TDD as the default development approach:
+
+```mermaid
+flowchart LR
+    subgraph TDD ["TDD Cycle"]
+        direction LR
+        W["✍️ Write Test"] --> F["❌ Watch Fail"]
+        F --> I["💻 Implement"]
+        I --> G["✅ Green"]
+        G --> R["♻️ Refactor"]
+        R --> W
+    end
+    
+    style W fill:#fef3c7,stroke:#d97706
+    style F fill:#fecaca,stroke:#dc2626
+    style I fill:#e0e7ff,stroke:#4f46e5
+    style G fill:#bbf7d0,stroke:#16a34a
+    style R fill:#ddd6fe,stroke:#7c3aed
+```
 
 1. **Write the test first**: Define expected behavior before implementation
 2. **Watch it fail**: Confirm the test fails for the right reason
@@ -304,6 +345,23 @@ task check         # Pre-commit: all quality checks including tests
 ### Spec-Driven Development (SDD)
 
 Before writing any code, deft uses an AI-assisted specification process:
+
+```mermaid
+flowchart LR
+    subgraph SDD ["Spec-Driven Development Flow"]
+        direction LR
+        IDEA["💡 Idea"] --> SPEC["📝 make-spec.md"]
+        SPEC --> QA["❓ AI Interview"]
+        QA --> DOC["📋 SPECIFICATION.md"]
+        DOC --> BUILD["🔨 Multi-Agent Build"]
+    end
+    
+    style IDEA fill:#fef3c7,stroke:#d97706
+    style SPEC fill:#e0e7ff,stroke:#4f46e5
+    style QA fill:#fce7f3,stroke:#be185d
+    style DOC fill:#d1fae5,stroke:#059669
+    style BUILD fill:#dbeafe,stroke:#2563eb
+```
 
 **The Process:**
 
@@ -358,6 +416,34 @@ Before writing any code, deft uses an AI-assisted specification process:
 - Call out risks explicitly
 
 ## 📖 Example Workflows
+
+```mermaid
+flowchart TB
+    subgraph NewProject ["🆕 New Python Project"]
+        direction TB
+        NP1["AI reads main.md"] --> NP2["AI reads python.md"]
+        NP2 --> NP3["AI reads taskfile.md"]
+        NP3 --> NP4["Setup: pytest, ruff, black, mypy"]
+        NP4 --> NP5["Configure: ≥85% coverage"]
+        NP5 --> NP6["You customize: project.md"]
+    end
+    
+    subgraph ExistingGo ["📂 Existing Go Project"]
+        direction TB
+        EG1["AI reads user.md"] --> EG2["AI reads project.md"]
+        EG2 --> EG3["AI reads go.md"]
+        EG3 --> EG4["AI runs task check"]
+        EG4 --> EG5["AI makes changes"]
+    end
+    
+    subgraph Review ["🔍 Code Review"]
+        direction TB
+        CR1["AI reads quality standards"] --> CR2["task quality"]
+        CR2 --> CR3["task test:coverage"]
+        CR3 --> CR4["Check commits"]
+        CR4 --> CR5["Update suggestions.md"]
+    end
+```
 
 ### Starting a New Python Project
 
