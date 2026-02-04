@@ -4,11 +4,12 @@ Development strategies define the workflow from idea to implementation.
 
 ## Available Strategies
 
-| Strategy | Use Case | Artifacts |
-|----------|----------|-----------|
-| [default.md](./default.md) | Standard projects | PRD → SPECIFICATION |
-| rapid.md | Quick prototypes | SPECIFICATION only |
-| enterprise.md | Large teams | PRD → ADR → SPECIFICATION |
+| Strategy | Use Case | Phases |
+|----------|----------|--------|
+| [default.md](./default.md) | Standard projects | Interview → PRD → SPECIFICATION |
+| [speckit.md](./speckit.md) | Large/complex projects | Principles → Specify → Plan → Tasks → Implement |
+| rapid.md | Quick prototypes | SPECIFICATION only (future) |
+| enterprise.md | Compliance-heavy | PRD → ADR → SPECIFICATION (future) |
 
 ## Selecting a Strategy
 
