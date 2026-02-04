@@ -1,8 +1,23 @@
-# Warping Framework Project Guidelines
+# Deft Framework Project
 
 Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 
 **⚠️ See also**: [main.md](../main.md) | [taskfile.md](../tools/taskfile.md)
+
+## Principles (Non-Negotiable)
+
+<!-- These govern ALL decisions. Amend formally, not casually. -->
+
+- ! **Lazy Loading** — Only read files relevant to current task
+- ! **Layer Precedence** — More specific rules override general ones (user > project > language > tool > main)
+- ! **Spec-Driven** — Specifications drive implementation, not the reverse
+- ! **Test-First** — No implementation without tests
+- ⊗ **Premature Abstraction** — No wrappers or abstractions without proven need
+- ⊗ **Future-Proofing** — Build for now, not hypothetical futures
+
+<!-- Small team: keep 3-5 principles. Large org: expand into detailed articles. -->
+
+---
 
 ## Project Configuration
 
@@ -12,7 +27,7 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 
 **Purpose**: A layered framework for AI-assisted development with consistent standards and workflows
 
-**Specification**: See [README.md](../README.md) and [main.md](../main.md) for framework overview
+**Strategy**: [strategies/default.md](../strategies/default.md)
 
 ## 📋 Workflow
 
@@ -25,11 +40,14 @@ task clean         # Clean generated artifacts
 
 ## 📁 Directory Structure
 
-- `core/` - Core framework files (user.md, project.md, coding.md)
+- `core/` - Core framework files (user.md, project.md)
+- `coding/` - Coding standards (coding.md, testing.md)
 - `languages/` - Language-specific standards (python.md, go.md, typescript.md, cpp.md)
 - `interfaces/` - Interface type guidelines (cli.md, rest.md, tui.md, web.md)
-- `tools/` - Tool-specific guidelines (taskfile.md, git.md, testing.md, telemetry.md)
+- `tools/` - Tool-specific guidelines (taskfile.md, telemetry.md)
+- `scm/` - Version control (git.md, github.md)
 - `swarm/` - Multi-agent coordination patterns
+- `strategies/` - Development strategies (default.md, etc.)
 - `templates/` - Templates and examples for specifications
 - `meta/` - Meta/process files (lessons.md, ideas.md, suggestions.md)
 
@@ -37,16 +55,9 @@ task clean         # Clean generated artifacts
 
 **Documentation Quality:**
 - ! All filenames use hyphens, not underscores
-- ! Maintain clear hierarchical precedence (user.md > project.md > language > tool > main.md)
 - ! Use RFC2119 notation (!=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY)
 - ~ Keep files focused and modular
 - ~ Cross-reference related documents
-
-**Framework Principles:**
-- ! Lazy loading - only read files relevant to current task
-- ! Layer precedence - more specific rules override general ones
-- ~ Self-improvement via lessons.md updates
-- ~ Maintain both templates and examples
 
 **Version Control:**
 - ! Use Conventional Commits
