@@ -65,8 +65,9 @@ This notation appears in technical standard files (python.md, go.md, etc.) for s
 Deft uses a layered architecture where more specific rules override general ones:
 
 ```mermaid
-flowchart TB
+flowchart TD
     subgraph precedence ["Rule Precedence (top = highest)"]
+        direction TB
         U["👤 user.md<br/><i>Personal preferences</i>"]
         P["📁 project.md<br/><i>Project-specific rules</i>"]
         L["🐍 python.md / go.md / etc.<br/><i>Language standards</i>"]
@@ -75,7 +76,11 @@ flowchart TB
         S["📋 specification.md<br/><i>Project requirements</i>"]
     end
 
-    U --> P --> L --> T --> M --> S
+    U --> P
+    P --> L
+    L --> T
+    T --> M
+    M --> S
 
     style U fill:#4ade80,stroke:#166534,color:#000
     style P fill:#60a5fa,stroke:#1e40af,color:#000
