@@ -1,5 +1,10 @@
 version: '3'
 
+includes:
+  deployments:
+    taskfile: ./taskfiles/deployments.yml
+    optional: true
+
 vars:
   PROJECT_NAME: warping
   VERSION: 0.2.0

@@ -24,3 +24,15 @@ Thumbs.db
 
 # User-specific files (users should copy from templates)
 core/user.md
+
+# Python cache
+__pycache__/
+
+# Secrets (project-specific)
+secrets/
+
+# vContext state
+vcontext/
+
+# Generated Deft exports
+.deft/
