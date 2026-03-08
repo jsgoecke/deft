@@ -36,6 +36,25 @@ See `SPECIFICATION.md` for full implementation plan.
 
 ---
 
+## Priority Refactors (Before Phase 2)
+
+### Convert to TDD mode
+- Set up test infrastructure and convert existing code to TDD workflow
+- Must be completed before starting the installation model refactor
+- Prerequisite for validating all subsequent changes
+
+### Refactor: git submodule → npx/CLI installation model
+- **High priority** — first major feature change after TDD conversion
+- Current model: install via `git clone` as a git submodule in project dir
+- New model: install as a skill and/or via `npx`; `deft` command available on PATH
+- `deft project` starts the project workflow from any directory
+- Creates `./deft/` dir in the project as the "deft is active here" flag; per-project files stored there
+- `USER.md` moves to `~/.config/deft/USER.md` (global, not per-project)
+- Should work as a `SKILL.md`
+- Some work already done but untested; npx install scaffolding not yet started
+
+---
+
 ## Phase 2 — Deft Directive v0.6.0 Upgrade
 
 *Do not start until Phase 1 testbed is complete and passing — tests will validate this work.*
