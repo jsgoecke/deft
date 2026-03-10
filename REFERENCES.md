@@ -101,6 +101,12 @@ Load as needed:
 - **[core/glossary.md](./core/glossary.md)** - Term definitions (release, feature, task, demo sentence, etc.)
 - Load: When planning features with multiple phases or gray areas
 
+### When Working with Changes
+
+- **[commands.md](./commands.md)** - Change lifecycle workflows (create, apply, verify, archive)
+- **[history/README.md](./history/README.md)** - Change folder structure and conventions
+- Load: When using `/deft:run:change` commands or working with scoped change proposals
+
 ### When Creating Specifications
 
 **[templates/make-spec.md](./templates/make-spec.md)** - Specification generation

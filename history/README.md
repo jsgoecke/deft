@@ -1,0 +1,37 @@
+# History
+
+Scoped change proposals and their archive.
+
+## Directory Structure
+
+```
+history/
+├── changes/             ← Active changes (in progress or awaiting review)
+│   └── <name>/
+│       ├── proposal.md
+│       ├── design.md
+│       ├── tasks.vbrief.json
+│       └── specs/
+│           └── <capability>/
+│               └── spec.md
+└── archive/             ← Completed changes (historical record)
+    └── <date>-<name>/
+        └── (same structure as above)
+```
+
+## Lifecycle
+
+1. **Create** — `/deft:run:change <name>` creates `changes/<name>/`
+2. **Review** — User reviews proposal.md, design.md, tasks
+3. **Apply** — `/deft:run:change:apply` implements tasks
+4. **Verify** — `/deft:run:change:verify` checks outcomes
+5. **Archive** — `/deft:run:change:archive` moves to `archive/<date>-<name>/`
+
+See [commands.md](../commands.md) for full workflow documentation.
+
+## Conventions
+
+- Change names use hyphens: `add-dark-mode`, `fix-auth-timeout`
+- Archive entries are prefixed with `YYYY-MM-DD`
+- Archived changes are never modified
+- Each change is self-contained — all context needed to understand it lives in its folder

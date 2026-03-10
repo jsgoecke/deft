@@ -102,9 +102,11 @@ When the user types `/deft:run:<name>`, read and follow `strategies/<name>.md`.
 
 ### Change Lifecycle
 
+See [commands.md](./commands.md) for full workflow details.
+
 - `/deft:run:change <name>` — Create a scoped change proposal in `history/changes/<name>/`
 - `/deft:run:change:apply` — Implement tasks from the active change
-- `/deft:run:change:verify` — Verify the active change against acceptance criteria ([verification/verification.md](./verification/verification.md))
+- `/deft:run:change:verify` — Verify the active change against acceptance criteria
 - `/deft:run:change:archive` — Archive completed change to `history/archive/`
 
 ### Session
