@@ -1,0 +1,46 @@
+{
+  "_comment": "Known failures in the current beta baseline. Tests reference these by id to mark assertions as xfail rather than blocking. Each entry documents the root cause and which Phase 2 todo item will fix it.",
+  "known_failures": [
+    {
+      "id": "leaked-personal-project-config",
+      "check": "test_standards.leaked_personal_content",
+      "file": "core/project.md",
+      "reason": "Contains 'Iglesia Project Guidelines' — a leaked personal project config. Should be replaced with a generic framework template. See todo.md Phase 2: 'Clean leaked personal files'.",
+      "xfail": true,
+      "fix_in": "Phase 2 (v0.6.0)"
+    },
+    {
+      "id": "missing-strategy-rapid",
+      "check": "test_structure.strategy_files_exist",
+      "file": "strategies/rapid.md",
+      "reason": "File referenced in strategies/README.md as '(future)' but does not exist on disk. See todo.md Phase 2: 'Add missing strategies'.",
+      "xfail": true,
+      "fix_in": "Phase 2 (v0.6.0)"
+    },
+    {
+      "id": "missing-strategy-enterprise",
+      "check": "test_structure.strategy_files_exist",
+      "file": "strategies/enterprise.md",
+      "reason": "File referenced in strategies/README.md as '(future)' but does not exist on disk. See todo.md Phase 2: 'Add missing strategies'.",
+      "xfail": true,
+      "fix_in": "Phase 2 (v0.6.0)"
+    },
+    {
+      "id": "discuss-missing-from-strategy-index",
+      "check": "test_contracts.discuss_in_strategy_index",
+      "file": "strategies/discuss.md",
+      "reason": "File exists and is complete but is not listed in the strategies/README.md strategy table. See todo.md Phase 2: 'Add strategies/discuss.md to README table'.",
+      "xfail": true,
+      "fix_in": "Phase 2 (v0.6.0)"
+    },
+    {
+      "id": "changelog-warping-references",
+      "check": "test_standards.no_warping_references",
+      "file": "CHANGELOG.md",
+      "reason": "Contains 'warping' as legitimate historical changelog entries documenting the project rename from Warping to Deft. These references are intentional and should be exempt from the deprecated-name check.",
+      "xfail": false,
+      "exempt": true,
+      "fix_in": "N/A — historical record, intentionally preserved"
+    }
+  ]
+}
