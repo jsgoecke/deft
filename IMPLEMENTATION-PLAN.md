@@ -155,4 +155,11 @@ Phase 2.1 ──► Phase 2.2 ┐                                               
 
 ---
 
+## Workflow Rules
+
+- **No auto-push.** Commit completed work locally, then STOP. Do not push to `origin`
+  until the author has vetted locally and explicitly instructs a push.
+- **Author on all commits.** Every commit must carry `Scott Adams <msadams@msadams.com>`
+  as author with the current timestamp.
+
 *Generated from spec gap analysis — Deft Directive msadams-branch — 2026-03-10*
