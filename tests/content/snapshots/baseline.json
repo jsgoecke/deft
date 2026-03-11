@@ -1,12 +1,24 @@
 {
   "repo_root": "E:/Repos/deft",
-  "file_count": 139,
+  "file_count": 145,
   "files": {
     "CHANGELOG.md": {
       "headers": [
         {
           "level": 1,
           "text": "Changelog"
+        },
+        {
+          "level": 2,
+          "text": "[0.6.0] - 2026-03-11"
+        },
+        {
+          "level": 3,
+          "text": "Added"
+        },
+        {
+          "level": 3,
+          "text": "Changed"
         },
         {
           "level": 2,
@@ -507,6 +519,116 @@
         }
       ]
     },
+    "commands.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "Change Lifecycle Commands"
+        },
+        {
+          "level": 2,
+          "text": "Overview"
+        },
+        {
+          "level": 2,
+          "text": "`/deft:change <name>`"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 3,
+          "text": "Artifacts"
+        },
+        {
+          "level": 3,
+          "text": "proposal.md"
+        },
+        {
+          "level": 3,
+          "text": "design.md"
+        },
+        {
+          "level": 3,
+          "text": "tasks.vbrief.json"
+        },
+        {
+          "level": 3,
+          "text": "specs/"
+        },
+        {
+          "level": 2,
+          "text": "`/deft:change:apply`"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 3,
+          "text": "Active Change Detection"
+        },
+        {
+          "level": 2,
+          "text": "`/deft:change:verify`"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 2,
+          "text": "`/deft:change:archive`"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 3,
+          "text": "Spec Delta Merge"
+        },
+        {
+          "level": 3,
+          "text": "CHANGELOG Entry"
+        },
+        {
+          "level": 3,
+          "text": "What Gets Archived"
+        },
+        {
+          "level": 2,
+          "text": "Anti-Patterns"
+        }
+      ],
+      "links": [
+        {
+          "text": "verification/verification.md",
+          "target": "./verification/verification.md"
+        },
+        {
+          "text": "resilience/continue-here.md",
+          "target": "./resilience/continue-here.md"
+        },
+        {
+          "text": "vbrief/vbrief.md",
+          "target": "./vbrief/vbrief.md"
+        },
+        {
+          "text": "context/spec-deltas.md",
+          "target": "./context/spec-deltas.md"
+        },
+        {
+          "text": "verification/verification.md",
+          "target": "./verification/verification.md"
+        },
+        {
+          "text": "context/spec-deltas.md",
+          "target": "./context/spec-deltas.md"
+        }
+      ]
+    },
     "context/context.md": {
       "headers": [
         {
@@ -720,6 +842,100 @@
         }
       ]
     },
+    "context/spec-deltas.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "Spec Deltas"
+        },
+        {
+          "level": 2,
+          "text": "Core Principle"
+        },
+        {
+          "level": 2,
+          "text": "How It Works"
+        },
+        {
+          "level": 2,
+          "text": "Writing Spec Deltas"
+        },
+        {
+          "level": 3,
+          "text": "Format"
+        },
+        {
+          "level": 1,
+          "text": "auth-session — Spec Delta"
+        },
+        {
+          "level": 2,
+          "text": "New Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Requirement: Extended session with remember-me"
+        },
+        {
+          "level": 4,
+          "text": "Scenario: Extended session with remember me"
+        },
+        {
+          "level": 2,
+          "text": "Modified Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Requirement: Session expiration (modified)"
+        },
+        {
+          "level": 3,
+          "text": "Rules"
+        },
+        {
+          "level": 2,
+          "text": "vBRIEF Chain"
+        },
+        {
+          "level": 3,
+          "text": "Reference Types"
+        },
+        {
+          "level": 3,
+          "text": "Narratives for Context"
+        },
+        {
+          "level": 2,
+          "text": "Reading Spec Deltas"
+        },
+        {
+          "level": 2,
+          "text": "When to Create Spec Deltas"
+        },
+        {
+          "level": 2,
+          "text": "After Archiving"
+        },
+        {
+          "level": 2,
+          "text": "Anti-Patterns"
+        }
+      ],
+      "links": [
+        {
+          "text": "commands.md",
+          "target": "../commands.md"
+        },
+        {
+          "text": "vbrief/vbrief.md",
+          "target": "../vbrief/vbrief.md"
+        },
+        {
+          "text": "context/context.md",
+          "target": "./context.md"
+        }
+      ]
+    },
     "context/tool-design.md": {
       "headers": [
         {
@@ -890,8 +1106,8 @@
           "target": "../resilience/context-pruning.md"
         },
         {
-          "text": "strategies/brownfield.md",
-          "target": "../strategies/brownfield.md"
+          "text": "strategies/map.md",
+          "target": "../strategies/map.md"
         },
         {
           "text": "verification/integration.md",
@@ -904,6 +1120,10 @@
         {
           "text": "verification/plan-checking.md",
           "target": "../verification/plan-checking.md"
+        },
+        {
+          "text": "context/spec-deltas.md",
+          "target": "../context/spec-deltas.md"
         }
       ]
     },
@@ -9719,11 +9939,45 @@
         }
       ]
     },
+    "history/README.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "History"
+        },
+        {
+          "level": 2,
+          "text": "Directory Structure"
+        },
+        {
+          "level": 2,
+          "text": "Lifecycle"
+        },
+        {
+          "level": 2,
+          "text": "Conventions"
+        },
+        {
+          "level": 2,
+          "text": "Archive Merge"
+        }
+      ],
+      "links": [
+        {
+          "text": "commands.md",
+          "target": "../commands.md"
+        },
+        {
+          "text": "context/spec-deltas.md",
+          "target": "../context/spec-deltas.md"
+        }
+      ]
+    },
     "IMPLEMENTATION-PLAN.md": {
       "headers": [
         {
           "level": 1,
-          "text": "Testbed Phase 1 — Remaining Implementation"
+          "text": "Testbed — v0.6.0 Content Update"
         },
         {
           "level": 2,
@@ -9731,59 +9985,47 @@
         },
         {
           "level": 2,
-          "text": "Phase 1 Gap — conftest.py helpers"
+          "text": "What v0.6.0 Changed"
+        },
+        {
+          "level": 3,
+          "text": "New files"
+        },
+        {
+          "level": 3,
+          "text": "Modified files"
+        },
+        {
+          "level": 3,
+          "text": "Issues now fixed"
         },
         {
           "level": 2,
-          "text": "Phase 2 — Content Integrity Suite"
+          "text": "Required Changes"
         },
         {
           "level": 3,
-          "text": "2.1 Baseline Snapshot (prerequisite for 2.2–2.5)"
+          "text": "1. test_structure.py"
         },
         {
           "level": 3,
-          "text": "2.2 Structural Checks (after 2.1)"
+          "text": "2. test_contracts.py"
         },
         {
           "level": 3,
-          "text": "2.3 Standards Compliance (after 2.1)"
+          "text": "3. known_failures.json"
         },
         {
           "level": 3,
-          "text": "2.4 Contract Checks (after 2.1)"
+          "text": "4. Regenerate baseline.json"
         },
         {
           "level": 3,
-          "text": "2.5 Shape Checks (after 2.1)"
-        },
-        {
-          "level": 2,
-          "text": "Phase 3 — CLI Regression Suite"
+          "text": "5. Run full test suite and fix"
         },
         {
           "level": 3,
-          "text": "3.2 `cmd_bootstrap` tests"
-        },
-        {
-          "level": 3,
-          "text": "3.3 `cmd_project` tests"
-        },
-        {
-          "level": 3,
-          "text": "3.4 `cmd_validate` tests"
-        },
-        {
-          "level": 3,
-          "text": "3.5 `cmd_doctor` tests"
-        },
-        {
-          "level": 2,
-          "text": "Phase 4 — Taskfile Integration"
-        },
-        {
-          "level": 2,
-          "text": "Phase 5 — Baseline Finalization"
+          "text": "6. Verify `task check` passes clean"
         },
         {
           "level": 2,
@@ -9791,15 +10033,14 @@
         },
         {
           "level": 2,
+          "text": "After Tests Pass"
+        },
+        {
+          "level": 2,
           "text": "Workflow Rules"
         }
       ],
-      "links": [
-        {
-          "text": "text",
-          "target": "path"
-        }
-      ]
+      "links": []
     },
     "interfaces/cli.md": {
       "headers": [
@@ -12653,6 +12894,22 @@
         },
         {
           "level": 2,
+          "text": "Slash Commands"
+        },
+        {
+          "level": 3,
+          "text": "Strategies"
+        },
+        {
+          "level": 3,
+          "text": "Change Lifecycle"
+        },
+        {
+          "level": 3,
+          "text": "Session"
+        },
+        {
+          "level": 2,
           "text": "Context Awareness"
         }
       ],
@@ -12740,6 +12997,38 @@
         {
           "text": "vbrief/vbrief.md",
           "target": "./vbrief/vbrief.md"
+        },
+        {
+          "text": "strategies/interview.md",
+          "target": "./strategies/interview.md"
+        },
+        {
+          "text": "strategies/yolo.md",
+          "target": "./strategies/yolo.md"
+        },
+        {
+          "text": "strategies/map.md",
+          "target": "./strategies/map.md"
+        },
+        {
+          "text": "strategies/discuss.md",
+          "target": "./strategies/discuss.md"
+        },
+        {
+          "text": "strategies/research.md",
+          "target": "./strategies/research.md"
+        },
+        {
+          "text": "strategies/speckit.md",
+          "target": "./strategies/speckit.md"
+        },
+        {
+          "text": "commands.md",
+          "target": "./commands.md"
+        },
+        {
+          "text": "resilience/continue-here.md",
+          "target": "./resilience/continue-here.md"
         },
         {
           "text": "project.md",
@@ -13086,8 +13375,8 @@
           "target": "../languages/python.md"
         },
         {
-          "text": "Default",
-          "target": "../strategies/default.md"
+          "text": "Interview",
+          "target": "../strategies/interview.md"
         },
         {
           "text": "../tools/telemetry.md",
@@ -13345,6 +13634,10 @@
         },
         {
           "level": 3,
+          "text": "When Working with Changes"
+        },
+        {
+          "level": 3,
           "text": "When Creating Specifications"
         },
         {
@@ -13534,8 +13827,8 @@
           "target": "./strategies/discuss.md"
         },
         {
-          "text": "strategies/brownfield.md",
-          "target": "./strategies/brownfield.md"
+          "text": "strategies/map.md",
+          "target": "./strategies/map.md"
         },
         {
           "text": "strategies/research.md",
@@ -13544,6 +13837,18 @@
         {
           "text": "core/glossary.md",
           "target": "./core/glossary.md"
+        },
+        {
+          "text": "commands.md",
+          "target": "./commands.md"
+        },
+        {
+          "text": "history/README.md",
+          "target": "./history/README.md"
+        },
+        {
+          "text": "context/spec-deltas.md",
+          "target": "./context/spec-deltas.md"
         },
         {
           "text": "templates/make-spec.md",
@@ -14624,8 +14929,8 @@
       ],
       "links": [
         {
-          "text": "strategies/default.md",
-          "target": "./default.md"
+          "text": "strategies/interview.md",
+          "target": "./interview.md"
         },
         {
           "text": "strategies/speckit.md",
@@ -14634,6 +14939,238 @@
         {
           "text": "core/glossary.md",
           "target": "../core/glossary.md"
+        }
+      ]
+    },
+    "strategies/interview.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "Interview Strategy"
+        },
+        {
+          "level": 2,
+          "text": "When to Use"
+        },
+        {
+          "level": 2,
+          "text": "Workflow Overview"
+        },
+        {
+          "level": 2,
+          "text": "Phase 1: Interview"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 3,
+          "text": "Question Areas"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Phase 2: PRD Generation"
+        },
+        {
+          "level": 3,
+          "text": "PRD Structure"
+        },
+        {
+          "level": 1,
+          "text": "[Project Name] PRD"
+        },
+        {
+          "level": 2,
+          "text": "Problem Statement"
+        },
+        {
+          "level": 2,
+          "text": "Goals"
+        },
+        {
+          "level": 2,
+          "text": "User Stories"
+        },
+        {
+          "level": 2,
+          "text": "Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Functional Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Non-Functional Requirements"
+        },
+        {
+          "level": 2,
+          "text": "Success Metrics"
+        },
+        {
+          "level": 2,
+          "text": "Open Questions"
+        },
+        {
+          "level": 3,
+          "text": "Guidelines"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Phase 3: SPECIFICATION Generation"
+        },
+        {
+          "level": 3,
+          "text": "SPECIFICATION Structure"
+        },
+        {
+          "level": 1,
+          "text": "[Project Name] SPECIFICATION"
+        },
+        {
+          "level": 2,
+          "text": "Overview"
+        },
+        {
+          "level": 2,
+          "text": "Architecture"
+        },
+        {
+          "level": 2,
+          "text": "Implementation Plan"
+        },
+        {
+          "level": 3,
+          "text": "Phase 1: Foundation"
+        },
+        {
+          "level": 4,
+          "text": "Subphase 1.1: Setup"
+        },
+        {
+          "level": 4,
+          "text": "Subphase 1.2: Core (depends on: 1.1)"
+        },
+        {
+          "level": 3,
+          "text": "Phase 2: Features (depends on: Phase 1)"
+        },
+        {
+          "level": 2,
+          "text": "Testing Strategy"
+        },
+        {
+          "level": 2,
+          "text": "Deployment"
+        },
+        {
+          "level": 3,
+          "text": "Guidelines"
+        },
+        {
+          "level": 3,
+          "text": "Task Format"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Artifacts Summary"
+        },
+        {
+          "level": 2,
+          "text": "Invoking This Strategy"
+        }
+      ],
+      "links": [
+        {
+          "text": "strategies/discuss.md",
+          "target": "./discuss.md"
+        },
+        {
+          "text": "strategies/yolo.md",
+          "target": "./yolo.md"
+        },
+        {
+          "text": "core/glossary.md",
+          "target": "../core/glossary.md"
+        }
+      ]
+    },
+    "strategies/map.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "Map Strategy"
+        },
+        {
+          "level": 2,
+          "text": "When to Use"
+        },
+        {
+          "level": 2,
+          "text": "Workflow"
+        },
+        {
+          "level": 2,
+          "text": "Mapping Artifacts"
+        },
+        {
+          "level": 3,
+          "text": "STACK.md — Technology inventory"
+        },
+        {
+          "level": 3,
+          "text": "ARCHITECTURE.md — System design"
+        },
+        {
+          "level": 3,
+          "text": "CONVENTIONS.md — How code is written here"
+        },
+        {
+          "level": 3,
+          "text": "CONCERNS.md — Technical debt and risks"
+        },
+        {
+          "level": 2,
+          "text": "Mapping Rules"
+        },
+        {
+          "level": 2,
+          "text": "How Artifacts Feed Downstream"
+        },
+        {
+          "level": 2,
+          "text": "Invoking This Strategy"
+        }
+      ],
+      "links": [
+        {
+          "text": "strategies/interview.md",
+          "target": "./interview.md"
+        },
+        {
+          "text": "strategies/discuss.md",
+          "target": "./discuss.md"
+        },
+        {
+          "text": "core/glossary.md",
+          "target": "../core/glossary.md"
+        },
+        {
+          "text": "strategies/map.md",
+          "target": "./deft/strategies/map.md"
         }
       ]
     },
@@ -14662,24 +15199,32 @@
       ],
       "links": [
         {
-          "text": "default.md",
-          "target": "./default.md"
+          "text": "interview.md",
+          "target": "./interview.md"
+        },
+        {
+          "text": "yolo.md",
+          "target": "./yolo.md"
         },
         {
           "text": "speckit.md",
           "target": "./speckit.md"
         },
         {
-          "text": "brownfield.md",
-          "target": "./brownfield.md"
+          "text": "map.md",
+          "target": "./map.md"
+        },
+        {
+          "text": "discuss.md",
+          "target": "./discuss.md"
         },
         {
           "text": "research.md",
           "target": "./research.md"
         },
         {
-          "text": "strategies/rapid.md",
-          "target": "../strategies/rapid.md"
+          "text": "strategies/interview.md",
+          "target": "../strategies/interview.md"
         }
       ]
     },
@@ -14720,16 +15265,16 @@
       ],
       "links": [
         {
-          "text": "strategies/default.md",
-          "target": "./default.md"
+          "text": "strategies/interview.md",
+          "target": "./interview.md"
         },
         {
           "text": "strategies/discuss.md",
           "target": "./discuss.md"
         },
         {
-          "text": "strategies/brownfield.md",
-          "target": "./brownfield.md"
+          "text": "strategies/map.md",
+          "target": "./map.md"
         }
       ]
     },
@@ -14924,6 +15469,180 @@
         {
           "text": "strategies/speckit.md",
           "target": "./deft/strategies/speckit.md"
+        }
+      ]
+    },
+    "strategies/yolo.md": {
+      "headers": [
+        {
+          "level": 1,
+          "text": "Yolo Strategy"
+        },
+        {
+          "level": 2,
+          "text": "When to Use"
+        },
+        {
+          "level": 2,
+          "text": "Workflow Overview"
+        },
+        {
+          "level": 2,
+          "text": "Phase 1: Interview"
+        },
+        {
+          "level": 3,
+          "text": "Process"
+        },
+        {
+          "level": 3,
+          "text": "Question Areas"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Phase 2: PRD Generation"
+        },
+        {
+          "level": 3,
+          "text": "PRD Structure"
+        },
+        {
+          "level": 1,
+          "text": "[Project Name] PRD"
+        },
+        {
+          "level": 2,
+          "text": "Problem Statement"
+        },
+        {
+          "level": 2,
+          "text": "Goals"
+        },
+        {
+          "level": 2,
+          "text": "User Stories"
+        },
+        {
+          "level": 2,
+          "text": "Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Functional Requirements"
+        },
+        {
+          "level": 3,
+          "text": "Non-Functional Requirements"
+        },
+        {
+          "level": 2,
+          "text": "Success Metrics"
+        },
+        {
+          "level": 2,
+          "text": "Open Questions"
+        },
+        {
+          "level": 3,
+          "text": "Guidelines"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Phase 3: SPECIFICATION Generation"
+        },
+        {
+          "level": 3,
+          "text": "SPECIFICATION Structure"
+        },
+        {
+          "level": 1,
+          "text": "[Project Name] SPECIFICATION"
+        },
+        {
+          "level": 2,
+          "text": "Overview"
+        },
+        {
+          "level": 2,
+          "text": "Architecture"
+        },
+        {
+          "level": 2,
+          "text": "Implementation Plan"
+        },
+        {
+          "level": 3,
+          "text": "Phase 1: Foundation"
+        },
+        {
+          "level": 4,
+          "text": "Subphase 1.1: Setup"
+        },
+        {
+          "level": 4,
+          "text": "Subphase 1.2: Core (depends on: 1.1)"
+        },
+        {
+          "level": 3,
+          "text": "Phase 2: Features (depends on: Phase 1)"
+        },
+        {
+          "level": 2,
+          "text": "Testing Strategy"
+        },
+        {
+          "level": 2,
+          "text": "Deployment"
+        },
+        {
+          "level": 3,
+          "text": "Guidelines"
+        },
+        {
+          "level": 3,
+          "text": "Task Format"
+        },
+        {
+          "level": 3,
+          "text": "Transition Criteria"
+        },
+        {
+          "level": 2,
+          "text": "Artifacts Summary"
+        },
+        {
+          "level": 2,
+          "text": "Invoking This Strategy"
+        }
+      ],
+      "links": [
+        {
+          "text": "strategies/interview.md",
+          "target": "./interview.md"
+        },
+        {
+          "text": "strategies/discuss.md",
+          "target": "./discuss.md"
+        },
+        {
+          "text": "core/glossary.md",
+          "target": "../core/glossary.md"
+        },
+        {
+          "text": "interview.md",
+          "target": "./interview.md"
+        },
+        {
+          "text": "interview.md",
+          "target": "./interview.md"
         }
       ]
     },
@@ -15134,31 +15853,51 @@
         },
         {
           "level": 2,
-          "text": "Phase 1 — Testbed (In Progress)"
+          "text": "NOW — Blockers for testbed → master"
+        },
+        {
+          "level": 3,
+          "text": "1. Land PR #26 on master"
+        },
+        {
+          "level": 3,
+          "text": "2. Merge master → beta"
+        },
+        {
+          "level": 3,
+          "text": "3. Update test suite for v0.6.0 content"
+        },
+        {
+          "level": 3,
+          "text": "4. Reopen PR #22 and merge testbed to master"
         },
         {
           "level": 2,
-          "text": "Deferred from Phase 1 — Testbed Completions"
+          "text": "What landed on master (PRs #16–#20, 2026-03-11)"
         },
         {
           "level": 3,
-          "text": "CI: GitHub Actions workflow"
+          "text": "PR #16 — Slash commands, strategy renames, yolo strategy"
         },
         {
           "level": 3,
-          "text": "CLI tests: additional commands"
+          "text": "PR #17 — Change lifecycle workflow and history directory"
         },
         {
           "level": 3,
-          "text": "CLI tests: error and edge cases"
+          "text": "PR #19 — Spec deltas with vBRIEF chain pattern"
         },
         {
           "level": 3,
-          "text": "GitHub Issues migration"
+          "text": "PR #20 — Archive lifecycle expansion"
+        },
+        {
+          "level": 3,
+          "text": "Open issues from review"
         },
         {
           "level": 2,
-          "text": "Priority Refactors (Before Phase 2)"
+          "text": "NEXT — Priority Refactors (after testbed lands on master)"
         },
         {
           "level": 3,
@@ -15166,15 +15905,15 @@
         },
         {
           "level": 3,
-          "text": "Enforce bootstrap as mandatory onboarding gate"
+          "text": "Agent-driven skills as primary onboarding path"
         },
         {
           "level": 3,
-          "text": "Refactor: git submodule → npx/CLI installation model"
+          "text": "Enforce USER.md gate in both paths"
         },
         {
           "level": 2,
-          "text": "Phase 2 — Deft Directive v0.6.0 Upgrade"
+          "text": "LATER — Phase 2 (Deft Directive Upgrade)"
         },
         {
           "level": 3,
@@ -15190,11 +15929,7 @@
         },
         {
           "level": 3,
-          "text": "Add `strategies/discuss.md` to README table"
-        },
-        {
-          "level": 3,
-          "text": "Port `SKILL.md` from master"
+          "text": "Port `SKILL.md` from master → superseded by agent skills"
         },
         {
           "level": 3,
@@ -15202,19 +15937,39 @@
         },
         {
           "level": 3,
-          "text": "Write CHANGELOG for post-v0.5.0 work"
+          "text": "Write remaining CHANGELOG entries"
         },
         {
           "level": 2,
-          "text": "Future Phases (Unscheduled)"
+          "text": "LATER — Deferred Test Coverage"
         },
         {
           "level": 3,
-          "text": "testbed: LLM-assisted content validation"
+          "text": "CI: GitHub Actions workflow"
+        },
+        {
+          "level": 3,
+          "text": "CLI tests: additional commands"
+        },
+        {
+          "level": 3,
+          "text": "CLI tests: error and edge cases"
+        },
+        {
+          "level": 2,
+          "text": "LATER — Future Phases (Unscheduled)"
+        },
+        {
+          "level": 3,
+          "text": "LLM-assisted content validation"
         },
         {
           "level": 3,
           "text": "Spec: self-upgrade to Deft Directive product"
+        },
+        {
+          "level": 2,
+          "text": "Completed"
         }
       ],
       "links": []

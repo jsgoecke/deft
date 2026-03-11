@@ -1,165 +1,125 @@
-# Testbed Phase 1 — Remaining Implementation
+# Testbed — v0.6.0 Content Update
 
 ## Current State
 
-Phase 1 scaffolding is complete: `pyproject.toml`, `run.py` shim, directory structure,
-`__init__.py` files, and `tests/conftest.py` (at `tests/` root, not `tests/fixtures/` —
-acceptable deviation). A smoke test (`tests/cli/test_import_smoke.py`) exists and validates
-the importlib shim. `todo.md` exists. `Taskfile.yml` has `PROJECT_NAME: deft` and `VERSION: 0.3.0`.
+Testbed Phases 1–5 are complete (568 passed, 24 xfailed as of 2026-03-10).
+The master→beta merge (1eb23fb, 2026-03-11) landed v0.6.0 content from PRs #16–#20.
+Tests need updating to account for new files, renames, and issues fixed by those PRs.
 
-Missing: all content tests (Phase 2), all CLI regression tests (Phase 3), Taskfile pytest
-integration (Phase 4), and baseline finalization (Phase 5).
-
----
-
-## Phase 1 Gap — conftest.py helpers
-
-Spec Task 3.1.1 requires two helper fixtures not yet in `tests/conftest.py`:
-
-- `run_command(cmd_fn, args, tmp_path)` — calls a `cmd_*` function in an isolated temp dir,
-  captures stdout/stderr, returns result
-- `mock_user_input(monkeypatch, responses)` — patches `ask_input` / `ask_choice` /
-  `ask_confirm` with a queue of predetermined responses
-
-Add these to `tests/conftest.py` before writing any CLI tests.
+All test infrastructure is in place: `pyproject.toml`, `conftest.py` (with `run_command`,
+`mock_user_input`, `deft_run_module` fixtures), content tests (structure, standards,
+contracts, shape), CLI tests (bootstrap, project, validate, doctor), `Taskfile.yml`
+integration, and baseline snapshot tooling.
 
 ---
 
-## Phase 2 — Content Integrity Suite
+## What v0.6.0 Changed
 
-*No dependency on Phase 1 gap. Can start immediately.*
+### New files
+- `commands.md` — change lifecycle workflows (RFC2119 legend ✓)
+- `context/spec-deltas.md` — spec delta format and vBRIEF chain (RFC2119 legend ✓)
+- `history/README.md` — change folder conventions (index file, no legend needed)
+- `history/archive/.gitkeep`, `history/changes/.gitkeep`
+- `strategies/interview.md` — renamed from `default.md` (legend ✓, shape ✓)
+- `strategies/map.md` — renamed from `brownfield.md` (legend ✓, shape ✓)
+- `strategies/yolo.md` — auto-pilot interview strategy (legend ✓, shape ✓)
 
-### 2.1 Baseline Snapshot (prerequisite for 2.2–2.5)
+### Modified files
+- `CHANGELOG.md` — v0.6.0 entry
+- `PROJECT.md` — strategy ref → `interview.md`
+- `REFERENCES.md` — "When Working with Changes" section added, `map.md` ref
+- `core/glossary.md` — "Spec delta" term, `map.md` ref
+- `main.md` — Slash Commands section
+- `strategies/README.md` — Command column in table, `discuss.md` now listed
+- `strategies/discuss.md`, `strategies/research.md` — updated cross-references
 
-- Implement `tests/content/snapshots/capture.py`: walk repo, collect all `.md` file paths,
-  top-level headers (`#`/`##`), and internal links `[text](path)` per file; output to
-  `tests/content/snapshots/baseline.json`
-- Run capture against current beta; create `tests/content/snapshots/known_failures.json`
-  annotating at minimum: README.md Warping references, `core/project.md` Voxio Bot content,
-  missing `strategies/rapid.md` and `strategies/enterprise.md`, `strategies/discuss.md`
-  absent from README table
-- Commit both files
-
-### 2.2 Structural Checks (after 2.1)
-
-- Implement `tests/content/test_structure.py`
-- Assert required top-level dirs: `coding/`, `context/`, `contracts/`, `core/`,
-  `deployments/`, `interfaces/`, `languages/`, `meta/`, `resilience/`, `scm/`,
-  `strategies/`, `swarm/`, `templates/`, `tools/`, `vbrief/`, `verification/`
-- Assert required root files: `main.md`, `README.md`, `REFERENCES.md`, `CHANGELOG.md`,
-  `LICENSE.md`, `Taskfile.yml`, `run`, `run.bat`
-- Assert strategy files listed in `strategies/README.md` exist on disk;
-  xfail `rapid.md` and `enterprise.md`
-
-### 2.3 Standards Compliance (after 2.1)
-
-- Implement `tests/content/test_standards.py`
-- RFC2119 legend check: files in `languages/`, `interfaces/`, `tools/`, `strategies/`,
-  `context/`, `verification/`, `resilience/` must contain `!=MUST, ~=SHOULD`
-- Deprecated path check: no `.md` should contain `core/user.md`; xfail known exceptions
-- Deprecated name check: files outside `old/` must not contain `warping`
-  (case-insensitive); xfail `README.md`
-
-### 2.4 Contract Checks (after 2.1)
-
-- Implement `tests/content/test_contracts.py`
-- Every file linked in `REFERENCES.md` exists on disk
-- Every file linked in `strategies/README.md` exists; xfail `rapid.md`, `enterprise.md`
-- All `⚠️ See also` link targets resolve
-- Assert `strategies/discuss.md` IS listed in `strategies/README.md`
-  (currently failing — documents the gap)
-
-### 2.5 Shape Checks (after 2.1)
-
-- Implement `tests/fixtures/shapes.py` with shape schemas:
-  - Language files: `## Standards`, `## Commands`, `## Patterns`
-  - Strategy files: `## When to Use`, `## Workflow`
-  - Interface files: `## Core Architecture` or `## Framework Selection`
-  - Tool files: at least one `##` section
-- Implement `tests/content/test_shape.py`: parameterize over each category,
-  assert files match their schema
+### Issues now fixed
+- `discuss.md` IS listed in `strategies/README.md` (PR #16 added it)
+- Old files `default.md` and `brownfield.md` still exist but are no longer in the README table
 
 ---
 
-## Phase 3 — CLI Regression Suite
+## Required Changes
 
-*Depends on Phase 1 gap (conftest.py helpers) being filled first.*
+### 1. test_structure.py
 
-### 3.2 `cmd_bootstrap` tests
+- Add `"history"` to `REQUIRED_DIRS` (new directory from change lifecycle)
+- Add `"commands.md"` to `REQUIRED_ROOT_FILES` (root-level command reference)
 
-- Implement `tests/cli/test_bootstrap.py`
-- Happy path: mocked inputs produce `USER.md` at expected path with `## Identity`
-  and `## Communication` sections
-- Output path: assert file written to `get_default_paths()['user']`
-- No crash: exits without exception given minimal valid inputs
+### 2. test_contracts.py
 
-### 3.3 `cmd_project` tests
+- Remove the hardcoded `@pytest.mark.xfail` from `test_discuss_in_strategy_index` —
+  the assertion now passes (discuss.md is in the README table since PR #16)
+- No other code changes needed — REFERENCES.md and strategy index link tests are
+  parametrized and will auto-discover the new links
 
-- Implement `tests/cli/test_project.py`
-- Happy path: mocked inputs produce `PROJECT.md` at expected path
-- Content: file contains `## Project Configuration` and `## Standards`
-- Strategy selection: selected strategy name appears in output
+### 3. known_failures.json
 
-### 3.4 `cmd_validate` tests
+- **Remove** `discuss-missing-from-strategy-index` (fixed by PR #16)
+- Run tests to identify any new failures from v0.6.0 files
+- Add entries for any new files that fail checks
 
-- Implement `tests/cli/test_validate.py`
-- Valid state: exits without error against valid temp deft dir
-- Missing file: reports failure when a required file is absent
+Based on pre-analysis, the new files should pass cleanly:
+- All new strategy files have RFC2119 legend and shape compliance
+- `commands.md` and `context/spec-deltas.md` have RFC2119 legend
+- No new files reference deprecated paths or "warping"
+- New REFERENCES.md links (`commands.md`, `history/README.md`, `context/spec-deltas.md`) all resolve
 
-### 3.5 `cmd_doctor` tests
+Existing xfail entries that remain valid:
+- `missing-strategy-rapid`, `missing-strategy-enterprise` — still future/unwritten
+- `leaked-personal-project-config` — core/project.md still has Iglesia content
+- All shape xfails (language files missing sections, discuss/research missing ## Workflow)
+- All deprecated-path and warping xfails (unchanged)
 
-- Implement `tests/cli/test_doctor.py`
-- Runs without crash
-- stdout includes at least one check result line (✓ or ⚠)
+### 4. Regenerate baseline.json
 
----
+- Run `python tests/content/snapshots/capture.py` to capture current beta state
+- New files will appear in the baseline; removed/renamed refs will update
+- Commit updated `baseline.json`
 
-## Phase 4 — Taskfile Integration
+### 5. Run full test suite and fix
 
-*Depends on Phases 2 and 3 complete.*
+- Run `uv run pytest tests/` — identify all failures
+- For each failure: fix the test code, fix the content, or add a known_failures.json entry
+- Target: all tests pass or are documented xfail
+- Update the baseline test count (was 568 passed / 24 xfailed)
 
-Update `Taskfile.yml`:
+### 6. Verify `task check` passes clean
 
-- Add `task test`: `uv run pytest tests/`
-- Add `task test:coverage`: `uv run pytest tests/ --cov --cov-report=html`;
-  fails if coverage < 75%
-- Add `task fmt`: `uv run ruff format . && uv run black .`
-- Replace `task lint`: `uv run ruff check . && uv run mypy run`
-  (currently only runs markdownlint)
-- Update `task check` deps to add `lint` and `test`
-
----
-
-## Phase 5 — Baseline Finalization
-
-*Depends on Phase 4 complete.*
-
-- Run `task test` against current beta; capture full result
-- Update `known_failures.json` to reflect actual vs expected failures
-- Ensure no unexpected failures remain (fix or document each one)
-- Verify `task check` blocks on test failure
+- Run `task check` — must pass lint + tests + validation
+- This is the gate before pushing beta and reopening PR #22
 
 ---
 
 ## Dependency Order
 
 ```
-Phase 1 gap ──────────────────────────────────────────► Phase 3 (CLI tests) ──┐
-                                                                                ├──► Phase 4 ──► Phase 5
-Phase 2.1 ──► Phase 2.2 ┐                                                      │
-             Phase 2.3  ├──────────────────────────────────────────────────────┘
-             Phase 2.4  │
-             Phase 2.5  ┘
-             (2.2–2.5 parallel after 2.1)
+1 (structure) ──┐
+                ├── 3 (known_failures) ──► 4 (baseline) ──► 5 (test suite) ──► 6 (task check)
+2 (contracts) ──┘
 ```
+
+Steps 1 and 2 can be done in parallel.
+Step 3 depends on 1 and 2 (need to know what changed before updating failure list).
+Step 4 must come before 5. Step 6 is the final gate.
+
+---
+
+## After Tests Pass
+
+Once `task check` is green:
+1. Commit and push beta
+2. Reopen PR #22 (testbed → master)
+3. Get visionik approval
+4. Merge to master
+
+See `todo.md` § NOW for the full sequence.
 
 ---
 
 ## Workflow Rules
 
-- **No auto-push.** Commit completed work locally, then STOP. Do not push to `origin`
-  until the author has vetted locally and explicitly instructs a push.
-- **Author on all commits.** Every commit must carry `Scott Adams <msadams@msadams.com>`
-  as author with the current timestamp.
+- **No auto-push.** Commit locally, then STOP. Push only on explicit instruction.
+- **Author on all commits.** Scott Adams <msadams@msadams.com>
 
-*Generated from spec gap analysis — Deft Directive msadams-branch — 2026-03-10*
+*Updated 2026-03-11 — post v0.6.0 merge (PRs #16–#20)*

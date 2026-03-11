@@ -197,13 +197,6 @@ def test_see_also_links_resolve(source_rel: str, raw_target: str, resolved_str: 
 # 4. strategies/discuss.md must appear in the strategy index
 # ---------------------------------------------------------------------------
 
-@pytest.mark.xfail(
-    reason=(
-        "strategies/discuss.md exists but is not listed in strategies/README.md table "
-        "— see todo.md Phase 2: 'Add strategies/discuss.md to README table'"
-    ),
-    strict=True,
-)
 def test_discuss_in_strategy_index() -> None:
     """strategies/discuss.md must be listed in the strategies/README.md table."""
     readme = (_REPO_ROOT / "strategies/README.md").read_text(encoding="utf-8")

@@ -140,14 +140,6 @@
       "fix_in": "Phase 2 (v0.6.0)"
     },
     {
-      "id": "discuss-missing-from-strategy-index",
-      "check": "test_contracts.discuss_in_strategy_index",
-      "file": "strategies/discuss.md",
-      "reason": "File exists and is complete but is not listed in the strategies/README.md strategy table. See todo.md Phase 2: 'Add strategies/discuss.md to README table'.",
-      "xfail": true,
-      "fix_in": "Phase 2 (v0.6.0)"
-    },
-    {
       "id": "rfc2119-missing-languages-commands",
       "check": "test_standards.rfc2119_legend_present",
       "file": "languages/commands.md",

@@ -59,6 +59,7 @@ REQUIRED_DIRS = [
     "contracts",
     "core",
     "deployments",
+    "history",
     "interfaces",
     "languages",
     "meta",
@@ -84,6 +85,7 @@ def test_required_directory_exists(dirname: str) -> None:
 # ---------------------------------------------------------------------------
 
 REQUIRED_ROOT_FILES = [
+    "commands.md",
     "main.md",
     "README.md",
     "REFERENCES.md",
