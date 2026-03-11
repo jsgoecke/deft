@@ -46,27 +46,34 @@ See `SPECIFICATION.md` and `IMPLEMENTATION-PLAN.md` for full details.
 
 ### Convert to TDD mode
 - Set up test infrastructure and convert existing code to TDD workflow
-- Must be completed before starting the installation model refactor
+- Must be completed before starting the skills/installation refactor
 - Prerequisite for validating all subsequent changes
 
-### Enforce bootstrap as mandatory onboarding gate
+### Agent-driven skills as primary onboarding path
+- **Decision (2026-03-10):** adopt agent-driven skills (PR #18 direction) as the
+  primary entry point; CLI commands become a fallback/power-user path
+- Rationale: deft is a framework for AI agents — the setup conversation belongs
+  inside the agent session, not in a 25-prompt CLI questionnaire
+- Reference implementation: PR #18 (`skills/deft-setup/SKILL.md`,
+  `skills/deft-build/SKILL.md`, `skills/install.sh`) — direction is right,
+  but needs TDD coverage and the USER.md gate before merge
+- Sequencing:
+  1. TDD infrastructure (see above)
+  2. Land `deft-setup` and `deft-build` skills — with tests
+  3. Add USER.md gate to `deft-build` (see below)
+  4. Installer: `curl | sh` is good UX; underlying model can stay `git clone`
+     for now, npx/CLI-on-PATH deferred to future phase
+  5. Demote CLI questionnaire (bootstrap/project/spec) to fallback
+
+### Enforce USER.md gate in both paths
 - Root cause: on initial setup, agent bypassed `run bootstrap` and jumped directly
   to `run spec`; `~/.config/deft/USER.md` was never generated via the intended path
   (identified 2026-03-09)
-- `cmd_spec` and `cmd_project` should check for USER.md at entry; if absent, warn
-  and redirect to `run bootstrap` before continuing
-- SKILL.md entry point must include the same bootstrap check as its first step
+- **CLI path:** `cmd_spec` and `cmd_project` should check for USER.md at entry;
+  if absent, warn and redirect to `run bootstrap` before continuing
+- **Skills path:** `deft-build` must check for USER.md at entry; if absent,
+  redirect to `deft-setup` Phase 1 before continuing
 - Protection must live in the repo — not reliant on user knowledge of the flow
-
-### Refactor: git submodule → npx/CLI installation model
-- **High priority** — first major feature change after TDD conversion
-- Current model: install via `git clone` as a git submodule in project dir
-- New model: install as a skill and/or via `npx`; `deft` command available on PATH
-- `deft project` starts the project workflow from any directory
-- Creates `./deft/` dir in the project as the "deft is active here" flag; per-project files stored there
-- `USER.md` moves to `~/.config/deft/USER.md` (global, not per-project)
-- Should work as a `SKILL.md`
-- Some work already done but untested; npx install scaffolding not yet started
 
 ---
 
@@ -98,13 +105,10 @@ See `SPECIFICATION.md` and `IMPLEMENTATION-PLAN.md` for full details.
 - File exists and is complete but missing from `strategies/README.md` strategy table
 - Verify: `test_contracts.py` discuss.md assertion should flip to passing
 
-### Port `SKILL.md` from master
-- Three commits on master updated SKILL.md that never landed in beta:
-  - `a6f120a` Add Claude Code skill integration
-  - `cc442fc` Add comprehensive New Project Workflow
-  - `2f2a89e` Add clawd.bot compatibility
-- Cherry-pick or manually apply these changes
-- See "Enforce bootstrap as mandatory onboarding gate" — entry point must invoke this check
+### Port `SKILL.md` from master → superseded by agent skills
+- Three commits on master updated SKILL.md (`a6f120a`, `cc442fc`, `2f2a89e`)
+- These are largely superseded by the new `deft-setup`/`deft-build` skills
+- Review for any content worth carrying forward; otherwise close out
 
 ### Codify PR workflow standards into `scm/github.md`
 - Add opinionated PR workflow rules to the PR Workflow section of `scm/github.md`:
