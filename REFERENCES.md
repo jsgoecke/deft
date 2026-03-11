@@ -101,6 +101,13 @@ Load as needed:
 - **[core/glossary.md](./core/glossary.md)** - Term definitions (release, feature, task, demo sentence, etc.)
 - Load: When planning features with multiple phases or gray areas
 
+### When Working with Changes
+
+- **[commands.md](./commands.md)** - Change lifecycle workflows (create, apply, verify, archive)
+- **[history/README.md](./history/README.md)** - Change folder structure and conventions
+- **[context/spec-deltas.md](./context/spec-deltas.md)** - Spec delta format, vBRIEF chain pattern, reading/writing deltas
+- Load: When using `/deft:change` commands
+
 ### When Creating Specifications
 
 **[templates/make-spec.md](./templates/make-spec.md)** - Specification generation
