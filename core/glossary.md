@@ -42,13 +42,15 @@ These concepts originate from [GSD](https://github.com/gsd-build/get-shit-done) 
 
 **Zero discovery calls** — The principle that agents should never spend tokens figuring out where they are, what exists, or what was decided. All of that should be pre-assembled in context before the task starts. See [resilience/context-pruning.md](../resilience/context-pruning.md).
 
-**Brownfield mapping** — Structured reconnaissance of an existing codebase before modifying it. Produces four artifacts: STACK (languages, frameworks, infrastructure), ARCHITECTURE (layers, entry points, data flow), CONVENTIONS (naming, patterns, file layout), and CONCERNS (tech debt, fragile areas, missing tests). See [strategies/brownfield.md](../strategies/brownfield.md).
+**Brownfield mapping** — Structured reconnaissance of an existing codebase before modifying it. Produces four artifacts: STACK (languages, frameworks, infrastructure), ARCHITECTURE (layers, entry points, data flow), CONVENTIONS (naming, patterns, file layout), and CONCERNS (tech debt, fragile areas, missing tests). See [strategies/map.md](../strategies/map.md). Invoked via `/deft:run:map`.
 
 **Integration checking** — Cross-feature wiring verification that every export has a matching import, every API endpoint has a consumer, auth gates protect all required routes, and at least one E2E flow traces through the full stack. See [verification/integration.md](../verification/integration.md).
 
 **Plan checking** — Pre-execution verification of a plan across four dimensions: (1) coverage — every acceptance criterion maps to at least one task, (2) completeness — every task has a verify command, (3) wiring — cross-feature dependencies declared in boundary maps, (4) scope — task count within sanity thresholds (2–3 ideal, 5+ requires split). See [verification/plan-checking.md](../verification/plan-checking.md).
 
 **Scope sanity** — A threshold-based guard against over-scoped plans that degrade context window quality. 1–3 tasks per plan is ideal; 4 is a warning; 5+ is a blocker requiring plan split. Part of plan checking dimension 4. See [verification/plan-checking.md](../verification/plan-checking.md).
+
+**Spec delta** — A scoped document capturing how a change modifies existing requirements. Shows new requirements and was/now diffs for modified ones. Linked to the baseline spec via vBRIEF `references` with `type: "x-vbrief/plan"`. Lives in `history/changes/<name>/specs/`. See [context/spec-deltas.md](../context/spec-deltas.md). Invoked as part of `/deft:change`.
 
 **Verify command** — A concrete, runnable command specified per task that confirms the task's work is correct (e.g., `pytest tests/test_auth.py`, `curl localhost:8080/health`). Required by plan checking dimension 2 (completeness). Tasks without a verify command fail the plan check.
 

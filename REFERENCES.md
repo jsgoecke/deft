@@ -96,10 +96,17 @@ Load as needed:
 
 - **[contracts/boundary-maps.md](./contracts/boundary-maps.md)** - Explicit produces/consumes declarations between features
 - **[strategies/discuss.md](./strategies/discuss.md)** - Structured alignment phase with Feynman technique
-- **[strategies/brownfield.md](./strategies/brownfield.md)** - Codebase mapping for existing projects (stack, architecture, conventions, concerns)
+- **[strategies/map.md](./strategies/map.md)** - Codebase mapping for existing projects (stack, architecture, conventions, concerns)
 - **[strategies/research.md](./strategies/research.md)** - Structured research: Don't Hand-Roll + Common Pitfalls output
 - **[core/glossary.md](./core/glossary.md)** - Term definitions (release, feature, task, demo sentence, etc.)
 - Load: When planning features with multiple phases or gray areas
+
+### When Working with Changes
+
+- **[commands.md](./commands.md)** - Change lifecycle workflows (create, apply, verify, archive)
+- **[history/README.md](./history/README.md)** - Change folder structure and conventions
+- **[context/spec-deltas.md](./context/spec-deltas.md)** - Spec delta format, vBRIEF chain pattern, reading/writing deltas
+- Load: When using `/deft:change` commands
 
 ### When Creating Specifications
 

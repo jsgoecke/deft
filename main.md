@@ -85,6 +85,35 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 - ? Notes may be informal, forward-looking, partial
 - ? Add/update without permission
 
+## Slash Commands
+
+### Strategies
+
+When the user types `/deft:run:<name>`, read and follow `strategies/<name>.md`.
+
+- `/deft:run:interview <name>` — Structured interview → PRD → SPECIFICATION ([strategies/interview.md](./strategies/interview.md))
+- `/deft:run:yolo <name>` — Auto-pilot interview; agent picks all recommended options ([strategies/yolo.md](./strategies/yolo.md))
+- `/deft:run:map` — Brownfield codebase mapping ([strategies/map.md](./strategies/map.md))
+- `/deft:run:discuss <topic>` — Feynman-style alignment + decision locking ([strategies/discuss.md](./strategies/discuss.md))
+- `/deft:run:research <domain>` — Don't hand-roll + common pitfalls ([strategies/research.md](./strategies/research.md))
+- `/deft:run:speckit <name>` — Large/complex 5-phase workflow ([strategies/speckit.md](./strategies/speckit.md))
+
+**Naming rule:** `/deft:run:<x>` always maps to `strategies/<x>.md`. Custom strategies follow the same pattern.
+
+### Change Lifecycle
+
+See [commands.md](./commands.md) for full workflow details.
+
+- `/deft:change <name>` — Create a scoped change proposal in `history/changes/<name>/`
+- `/deft:change:apply` — Implement tasks from the active change
+- `/deft:change:verify` — Verify the active change against acceptance criteria
+- `/deft:change:archive` — Archive completed change to `history/archive/`
+
+### Session
+
+- `/deft:continue` — Resume from continue checkpoint ([resilience/continue-here.md](./resilience/continue-here.md))
+- `/deft:checkpoint` — Save session state to `./vbrief/continue.vbrief.json`
+
 ## Context Awareness
 
 **Project Context:**
