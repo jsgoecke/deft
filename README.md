@@ -12,9 +12,11 @@ Deft is a SKILL.md that makes AI coding significantly more effective by providin
 
 **Don't have preferences yet?** No problem—Deft ships with professional-grade defaults for Python, Go, TypeScript, C++, and common workflows. Use it out of the box and customize later.
 
-**Platform compatibility:** If you're on a platform that doesn't yet support SKILL.md (such as Warp.dev), just add a line to your `AGENTS.md` that says "See deft/main.md".
+**Platform compatibility:** If you're on a platform that doesn't yet support SKILL.md, just add a line to your `AGENTS.md` that says "See deft/main.md".
 
 **Context-efficient:** Deft keeps AI context windows lean through RFC 2119-based notation (!, ~, ≉, ⊗) and lazy-loading—AI only reads the files relevant to the current task, not everything at once.
+
+**📍 Roadmap:** See [ROADMAP.md](./ROADMAP.md) for the development timeline, open issues, and planned work.
 
 ## 🎸 From Vibe to Virtuoso
 
@@ -68,7 +70,7 @@ Deft uses a layered architecture where more specific rules override general ones
 flowchart TD
     subgraph precedence ["Rule Precedence (top = highest)"]
         direction TB
-        U["👤 USER.md<br/><i>Personal preferences (~/.config/deft/)</i>"]
+        U["👤 USER.md<br/><i>Personal preferences</i>"]
         P["📁 PROJECT.md<br/><i>Project-specific rules</i>"]
         L["🐍 python.md / go.md / etc.<br/><i>Language standards</i>"]
         T["🔧 taskfile.md<br/><i>Tool guidelines</i>"]
@@ -95,22 +97,64 @@ flowchart TD
 ```
 deft/
 ├── README.md              # This file
+├── CHANGELOG.md           # Release history
+├── LICENSE.md             # MIT License
+├── PROJECT.md             # Project-level configuration
+├── REFERENCES.md          # Lazy-loading reference system
+├── ROADMAP.md             # Development timeline
+├── SKILL.md               # Entry point for AI agents
+├── SPECIFICATION.md       # Project specification
 ├── main.md                # Entry point - general AI guidelines
+├── commands.md            # Available commands
+├── Taskfile.yml           # Task automation
+├── run.bat                # Windows task runner shim
 │
-├── core/                  # Core framework files
-│   ├── project.md         # Project template
-│   ├── (user.md)          # Legacy location; now at ~/.config/deft/USER.md
-│   └── ralph.md           # Ralph loop concept (draft)
+├── cmd/                   # Go installer source
+│   └── deft-install/      # Cross-platform installer wizard
 │
 ├── coding/                # Coding standards
 │   ├── coding.md          # General coding guidelines
 │   └── testing.md         # Testing standards
 │
-├── languages/             # Language-specific standards
-│   ├── cpp.md
-│   ├── go.md
-│   ├── python.md
-│   └── typescript.md
+├── context/               # Context management strategies
+│   ├── context.md         # Overview
+│   ├── deterministic-split.md
+│   ├── examples.md
+│   ├── fractal-summaries.md
+│   ├── long-horizon.md
+│   ├── spec-deltas.md
+│   ├── tool-design.md
+│   └── working-memory.md
+│
+├── contracts/             # Interface contracts
+│   └── boundary-maps.md   # Produces/consumes between slices
+│
+├── core/                  # Core framework files
+│   ├── glossary.md        # Terminology definitions
+│   ├── project.md         # Project template
+│   ├── ralph.md           # Ralph loop concept
+│   ├── user.md            # Legacy; now ~/.config/deft/USER.md or %APPDATA%\deft\USER.md
+│   └── versioning.md      # Versioning guidelines
+│
+├── deployments/           # Platform-specific deployment guidance
+│   ├── README.md          # Deployment overview
+│   ├── agentuity/         # Agentuity platform
+│   ├── aws/               # AWS (Lambda, ECS, App Runner, EB)
+│   ├── azure/             # Azure (App Service, Functions, AKS, Container Apps)
+│   ├── cloudflare/        # Cloudflare Workers/Pages
+│   ├── cloud-gov/         # cloud.gov (FedRAMP)
+│   ├── fly-io/            # Fly.io
+│   ├── google/            # GCP (Cloud Run, Functions, App Engine, GKE)
+│   ├── netlify/           # Netlify
+│   └── vercel/            # Vercel
+│
+├── docs/                  # Documentation & articles
+│   ├── ai-coding-trust-paradox.md
+│   └── claude-code-integration.md
+│
+├── history/               # Plan archives and change logs
+│   ├── archive/
+│   └── changes/
 │
 ├── interfaces/            # Interface types
 │   ├── cli.md             # Command-line interfaces
@@ -118,54 +162,103 @@ deft/
 │   ├── tui.md             # Terminal UIs
 │   └── web.md             # Web UIs
 │
-├── verification/          # Agent work verification
-│   ├── verification.md    # 4-tier verification ladder, must-haves, stubs
-│   └── uat.md             # User acceptance test generation
+├── languages/             # Language-specific standards
+│   ├── python.md, go.md, typescript.md, javascript.md
+│   ├── cpp.md, c.md, csharp.md, rust.md, zig.md
+│   ├── java.md, kotlin.md, swift.md, dart.md
+│   ├── elixir.md, julia.md, r.md, sql.md
+│   ├── delphi.md, visual-basic.md, vhdl.md
+│   ├── 6502-DASM.md       # 6502 Assembly (DASM)
+│   ├── markdown.md, mermaid.md
+│   └── commands.md        # Language command reference
+│
+├── meta/                  # Meta/process files
+│   ├── code-field.md      # Coding mindset
+│   ├── ideas.md           # Future directions
+│   ├── lessons.md         # Learnings
+│   ├── morals.md          # Ethical guidelines
+│   ├── SOUL.md            # Core philosophy
+│   └── suggestions.md     # Improvements
+│
+├── platforms/             # Platform-specific standards
+│   ├── 2600.md            # Atari 2600
+│   └── unity.md           # Unity engine
 │
 ├── resilience/            # Session continuity & recovery
 │   ├── continue-here.md   # Interruption recovery protocol
 │   └── context-pruning.md # Fresh context per task
 │
-├── contracts/             # Interface contracts
-│   └── boundary-maps.md   # Produces/consumes between slices
-│
-├── deployments/           # Platform-specific deployment guidance
-│   └── cloud-gov/          # cloud.gov module (optional)
-│
-├── tools/                 # Tooling and workflow
+├── scm/                   # Source control management
+│   ├── changelog.md       # Changelog conventions
 │   ├── git.md             # Git conventions
-│   ├── github.md          # GitHub workflows
-│   ├── taskfile.md        # Task automation
-│   └── telemetry.md       # Observability
+│   └── github.md          # GitHub workflows
+│
+├── skills/                # Agent skills (SKILL.md format)
+│   ├── deft-build/        # Build/setup skill
+│   └── deft-setup/        # Interactive setup skill
+│
+├── strategies/            # Development strategies
+│   ├── README.md          # Strategy overview
+│   ├── brownfield.md      # Existing codebase work
+│   ├── default.md         # Default strategy
+│   ├── discuss.md         # Discussion mode
+│   ├── interview.md       # Interview-driven development
+│   ├── map.md             # Codebase mapping
+│   ├── research.md        # Research mode
+│   ├── speckit.md         # Specification toolkit
+│   └── yolo.md            # Rapid prototyping
 │
 ├── swarm/                 # Multi-agent coordination
 │   └── swarm.md           # Swarm guidelines
+│
+├── taskfiles/             # Reusable Taskfile includes
+│   └── deployments.yml    # Deployment tasks
 │
 ├── templates/             # Templates and examples
 │   ├── make-spec.md       # Spec generation guide
 │   ├── make-spec-example.md
 │   └── specification.md   # Project spec template
 │
-└── meta/                  # Meta/process files
-    ├── code-field.md      # Coding mindset
-    ├── ideas.md           # Future directions
-    ├── lessons.md         # Learnings
-    └── suggestions.md     # Improvements
+├── tests/                 # Test fixtures and snapshots
+│   ├── content/snapshots/ # Content validation baselines
+│   └── fixtures/          # Mock configs
+│
+├── tools/                 # Tooling and workflow
+│   ├── RWLDL.md           # Read-Write-List-Delete-Link pattern
+│   ├── taskfile.md        # Task automation
+│   └── telemetry.md       # Observability
+│
+├── vbrief/                # vBRIEF session format
+│   ├── vbrief.md          # Specification
+│   └── schemas/           # JSON schemas
+│
+└── verification/          # Agent work verification
+    ├── verification.md    # 4-tier verification ladder
+    ├── integration.md     # Integration testing
+    ├── plan-checking.md   # Plan validation
+    └── uat.md             # User acceptance testing
 ```
 
 ### 🔧 Core Files
 
 **main.md** - Entry point, general AI guidelines  
+**SKILL.md** - Entry point for AI agent skill loading  
 **coding/coding.md** - Software development standards  
 **coding/testing.md** - Testing standards  
 **core/project.md** - Project-specific template  
-**~/.config/deft/USER.md** - Your personal preferences (highest precedence)
+**USER.md** - Your personal preferences (highest precedence) — `~/.config/deft/USER.md` (Unix/macOS) or `%APPDATA%\deft\USER.md` (Windows)
 
 ### 🐍 Languages
-**languages/python.md** - Python standards (≥85% coverage, mypy strict, ruff/black)  
-**languages/go.md** - Go standards (≥85% coverage, Testify)  
-**languages/typescript.md** - TypeScript standards (strict mode, Vitest)  
-**languages/cpp.md** - C++ standards (C++20/23, Catch2/GoogleTest)
+**languages/** contains standards for 20+ languages including:  
+**python.md** - Python (≥85% coverage, mypy strict, ruff/black)  
+**go.md** - Go (≥85% coverage, Testify)  
+**typescript.md** / **javascript.md** - TS/JS (strict mode, Vitest)  
+**cpp.md** / **c.md** / **csharp.md** - C family
+**rust.md** / **zig.md** - Systems languages  
+**java.md** / **kotlin.md** / **swift.md** / **dart.md** - Mobile/JVM  
+**elixir.md** / **julia.md** / **r.md** / **sql.md** - Specialized  
+**markdown.md** / **mermaid.md** - Documentation formats  
+Plus: delphi, visual-basic, vhdl, 6502-DASM
 
 ### 💻 Interfaces
 **interfaces/cli.md** - Command-line interface patterns  
@@ -173,28 +266,55 @@ deft/
 **interfaces/tui.md** - Terminal UI (Textual, ink)  
 **interfaces/web.md** - Web UI (React, Tailwind)
 
+### 🎮 Platforms
+**platforms/2600.md** - Atari 2600 development  
+**platforms/unity.md** - Unity engine standards
+
 ### 🛠️ Tools
 **tools/taskfile.md** - Task automation best practices  
+**tools/telemetry.md** - Logging, tracing, metrics  
+**tools/RWLDL.md** - Read-Write-List-Delete-Link pattern
+
+### 📂 SCM
 **scm/git.md** - Commit conventions, safety  
 **scm/github.md** - GitHub workflows  
-**tools/telemetry.md** - Logging, tracing, metrics
+**scm/changelog.md** - Changelog conventions
 
 ### 🐝 Swarm
 **swarm/swarm.md** - Multi-agent coordination patterns
 
-### ✅ Verification
+### 🧭 Strategies
+**strategies/** - Development approach strategies:  
+**default.md** / **brownfield.md** / **interview.md** / **discuss.md** / **map.md** / **research.md** / **speckit.md** / **yolo.md**
 
-**verification/verification.md** - 4-tier verification ladder, must-haves, stub detection
+### 🧠 Context
+**context/context.md** - Context management overview  
+**context/fractal-summaries.md** / **working-memory.md** / **long-horizon.md** / **deterministic-split.md** / **spec-deltas.md** / **tool-design.md** / **examples.md**
+
+### ✅ Verification
+**verification/verification.md** - 4-tier verification ladder, must-haves, stub detection  
+**verification/integration.md** - Integration testing standards  
+**verification/plan-checking.md** - Plan validation  
 **verification/uat.md** - Auto-generated user acceptance test scripts
 
 ### 🛡️ Resilience
-
-**resilience/continue-here.md** - Interruption recovery protocol (vBRIEF-based)
+**resilience/continue-here.md** - Interruption recovery protocol (vBRIEF-based)  
 **resilience/context-pruning.md** - Fresh context per task, eliminating context rot
 
-### 📜 Contracts
+### 📋 vBRIEF
+**vbrief/vbrief.md** - Session format specification  
+**vbrief/schemas/** - JSON validation schemas
 
+### 📜 Contracts
 **contracts/boundary-maps.md** - Explicit produces/consumes declarations between slices
+
+### 🚀 Deployments
+**deployments/** - Deployment guides for 9 platforms:  
+agentuity, aws, azure, cloudflare, cloud-gov, fly-io, google, netlify, vercel
+
+### 🤖 Skills
+**skills/deft-build/** - Build/setup skill  
+**skills/deft-setup/** - Interactive setup wizard skill
 
 ### 📝 Templates
 **templates/make-spec.md** - Specification generation  
@@ -202,43 +322,48 @@ deft/
 
 ### 🧠 Meta
 **meta/code-field.md** - Coding mindset and philosophy  
+**meta/SOUL.md** - Core philosophy  
+**meta/morals.md** - Ethical guidelines  
 **meta/lessons.md** - Codified learnings (AI-updatable)  
 **meta/ideas.md** - Future directions  
 **meta/suggestions.md** - Improvement suggestions
 
 ## 🚀 Getting Started
 
-**Quick start (one-liner):**
-
-```bash
-git clone https://github.com/visionik/deft && deft/run bootstrap
-```
+Download the installer for your platform from [GitHub Releases](https://github.com/visionik/deft/releases), run it, and follow the prompts. No prerequisites required — the installer handles everything (including git if needed).
 
 ### 1. Install Deft
 
-Create a directory for a new project or `cd` into an existing one:
+**Windows:**
+- Download `install-windows-amd64.exe` (or `install-windows-arm64.exe` for Surface / Copilot+ PCs)
+- Run the downloaded file — Windows SmartScreen may warn about an unrecognised publisher; click "More info" → "Run anyway" (code signing is planned for a future release)
 
-```bash
-mkdir my-project && cd my-project  # New project
-# OR
-cd ~/Projects/existing-project      # Existing project
+**macOS:**
+- Download `install-macos-universal` — works on all Macs (Intel and Apple Silicon)
+- Make it executable and run: `chmod +x install-macos-universal && ./install-macos-universal`
+- If macOS Gatekeeper blocks the file: right-click → Open, or run `xattr -d com.apple.quarantine install-macos-universal` first (code signing is planned for a future release)
 
-git clone https://github.com/visionik/deft  # Installs deft in ./deft/ subdir
-```
+**Linux:**
+- Download `install-linux-amd64` (or `install-linux-arm64` for Raspberry Pi / ARM cloud)
+- Make it executable and run: `chmod +x install-linux-amd64 && ./install-linux-amd64`
 
-### 2. Bootstrap Your Configuration
+The installer guides you through choosing a project directory, installs git if needed, clones deft, wires it into `AGENTS.md`, and creates your user config directory.
 
-Use `deft/run bootstrap` to create your user and project preferences:
+**Building from source (developers only):** requires Go 1.22+ — `go run ./cmd/deft-install/`
+
+### 2. Set Up Your Preferences
+
+On your next AI session the agent automatically invokes the `deft-setup` skill to walk you through creating your USER.md preferences interactively.
+
+**User config location:**
+- Unix / macOS: `~/.config/deft/USER.md`
+- Windows: `%APPDATA%\deft\USER.md`
+- Override: set `DEFT_USER_PATH` environment variable
+
+To set up via CLI instead:
 
 ```bash
 deft/run bootstrap       # Interactive setup for user.md and project.md
-```
-
-Or use individual commands:
-
-```bash
-deft/run bootstrap       # Creates user.md with your preferences
-deft/run project         # Creates project.md with tech stack, standards
 ```
 
 ### 3. Generate Specification
@@ -269,7 +394,7 @@ Read SPECIFICATION.md and implement the project following deft/main.md standards
 
 Rules cascade with precedence:
 
-1. **USER.md** (highest) - your personal overrides (`~/.config/deft/USER.md`)
+1. **USER.md** (highest) - your personal overrides (`~/.config/deft/USER.md` on Unix/macOS, `%APPDATA%\deft\USER.md` on Windows)
 2. **project.md** - project-specific rules
 3. **Language files** (python.md, go.md) - language standards
 4. **Tool files** (taskfile.md) - tool guidelines
@@ -311,7 +436,7 @@ flowchart TD
 - AI updates `lessons.md` when learning better patterns
 - AI notes ideas in `ideas.md` for future consideration
 - AI suggests improvements in `suggestions.md`
-- You update `~/.config/deft/USER.md` with new preferences
+- You update your USER.md (`~/.config/deft/USER.md` on Unix/macOS, `%APPDATA%\deft\USER.md` on Windows) with new preferences
 - You update language/tool files as standards evolve
 
 ## 💡 Key Principles
@@ -596,6 +721,64 @@ for machine output. Users expect pretty by default.
 
 Review these periodically and promote good ideas to main guidelines
 
+## 🚢 Release & Testing
+
+The GitHub Actions workflow (`.github/workflows/release.yml`) builds installers for all 6 platform targets, creates a macOS universal binary, runs smoke tests on real hardware, and publishes a GitHub Release.
+
+### What the Smoke Tests Verify
+
+Every build is tested on its native platform (including `macos-latest` and `ubuntu-24.04-arm`):
+
+- `--version` — binary executes and reports version
+- `--help` — flag parsing and usage output render correctly
+- `--debug` — correct OS and architecture detection (e.g. `OS=darwin ARCH=arm64`)
+- Wizard startup — binary initializes and prints the welcome banner
+- `--branch beta` — branch flag is accepted without error
+- macOS universal binary contains both `x86_64` and `arm64` architectures
+
+### Testing on the Beta Branch
+
+The workflow triggers on version tags (`v*.*.*`). To run a full test on `beta` without publishing a real release, push a disposable test tag:
+
+```bash
+# Tag the current beta HEAD
+git tag v0.0.0-test.1
+git push origin v0.0.0-test.1
+
+# Monitor the workflow run
+gh run list --workflow=release.yml -R visionik/deft
+gh run watch <RUN_ID> -R visionik/deft
+
+# Clean up after verifying
+gh release delete v0.0.0-test.1 -R visionik/deft --yes
+git push origin --delete v0.0.0-test.1
+git tag -d v0.0.0-test.1
+```
+
+The workflow also includes a `workflow_dispatch` trigger for manual runs without publishing. However, GitHub requires `workflow_dispatch` to exist on the **default branch** (`master`) to be triggerable. Once `release.yml` is merged to `master`, you can run:
+
+```bash
+gh workflow run release.yml --ref beta -R visionik/deft
+```
+
+Manual runs skip the release job automatically (guarded by `if: startsWith(github.ref, 'refs/tags/v')`).
+
+### Proper Release Process
+
+1. Merge `beta` → `master` (or PR and merge via GitHub)
+2. Tag `master` with a semantic version:
+   ```bash
+   git checkout master
+   git pull origin master
+   git tag v1.2.3
+   git push origin v1.2.3
+   ```
+3. The workflow runs automatically: **build → universal-macos → smoke-test → release**
+4. Verify the published release at https://github.com/visionik/deft/releases
+5. Each release includes: `install-windows-amd64.exe`, `install-windows-arm64.exe`, `install-macos-universal`, `install-linux-amd64`, `install-linux-arm64`
+
+> **Note:** Binaries are not yet code-signed. macOS users may need to bypass Gatekeeper (see [Getting Started](#-getting-started)). Windows users may see a SmartScreen warning. Code signing is planned for a future release.
+
 ## 🎓 Philosophy
 
 Deft embodies:
@@ -607,7 +790,7 @@ Deft embodies:
 
 ---
 
-**Next Steps**: Read [main.md](./main.md) for comprehensive AI guidelines, then run `deft/run bootstrap` to create your USER.md.
+**Next Steps**: Read [main.md](./main.md) for comprehensive AI guidelines, then [download the installer](https://github.com/visionik/deft/releases) for your platform to get started.
 
 ---
 

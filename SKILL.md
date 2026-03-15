@@ -22,25 +22,56 @@ This skill automatically loads when you:
 - Run tests, make commits, or perform quality checks
 - Ask about project structure, workflows, or best practices
 
+## Missing Config Auto-Setup
+
+! When this skill activates, check for USER.md at the platform-appropriate path
+(Windows: `%APPDATA%\deft\USER.md`, Unix: `~/.config/deft/USER.md`, or `$DEFT_USER_PATH`).
+
+**If USER.md is missing**: Skip everything else in this file. Ask this question immediately
+as your FIRST and ONLY response — no summary, no menu, no preamble:
+
+> Deft has solid opinions on how code should be written and tested — I just need
+> a few things about you and your project. First, how deep do you want to go?
+>
+> 1. **I'm technical — ask me everything**
+> 2. **I have some opinions but keep it simple**
+> 3. **Just pick good defaults — I care about the product, not the tools**
+
+Then continue with `skills/deft-setup/SKILL.md` Phase 1 for remaining questions.
+
+**If USER.md exists but PROJECT.md is missing**: Skip to `skills/deft-setup/SKILL.md` Phase 2.
+
+**If USER.md and PROJECT.md both exist but no SPECIFICATION.md**: Skip to
+`skills/deft-setup/SKILL.md` Phase 3. Start the specification interview immediately —
+ask what to build and features as the first question.
+
+- ⊗ Present a summary of the config and ask what the user wants to do
+- ⊗ Ask "what would you like to do" or "what are we building" — start the interview directly
+- ⊗ Show menus, recaps, or workflow overviews before starting the next missing phase
+
 ## Core Principle: Rule Precedence
 
-Deft uses hierarchical rules where more specific overrides general:
+Deft uses hierarchical rules where more specific overrides general.
+USER.md has two sections with different precedence:
 
 ```
-user.md          ← HIGHEST precedence (personal preferences)
+USER.md Personal  ← HIGHEST (name, custom rules — always wins)
   ↓
-project.md       ← Project-specific rules
+PROJECT.md        ← Project-specific (strategy, coverage, languages, tech stack)
   ↓
-{language}.md    ← Language standards (python.md, go.md, typescript.md, cpp.md)
+USER.md Defaults   ← Fallback defaults (used when PROJECT.md doesn't specify)
   ↓
-{tool}.md        ← Tool guidelines (taskfile.md, git.md)
+{language}.md      ← Language standards (python.md, go.md, typescript.md, cpp.md)
   ↓
-main.md          ← General AI behavior
+{tool}.md          ← Tool guidelines (taskfile.md, git.md)
   ↓
-specification.md ← LOWEST precedence (requirements)
+main.md            ← General AI behavior
+  ↓
+specification.md   ← LOWEST precedence (requirements)
 ```
 
-**IMPORTANT**: If `user.md` says one thing and `python.md` says another, `user.md` ALWAYS wins.
+**IMPORTANT**: USER.md `Personal` section always wins. For project-scoped settings
+(strategy, coverage, languages), PROJECT.md overrides USER.md `Defaults`.
 
 ## File Reading Strategy (Lazy Loading)
 
@@ -78,8 +109,9 @@ See `./deft/tools/taskfile.md` for complete task standards and common commands.
 3. Implementation is INCOMPLETE until tests pass
 
 **Spec-Driven Development (SDD)** for new features/projects:
-1. Run `deft/run spec` to generate PRD.md via AI interview
-2. Review PRD.md → Generate SPECIFICATION.md → Review → Implement
+1. Run `deft/run spec` — sizing gate selects Light or Full path
+2. Light: Interview → SPECIFICATION.md (embedded requirements) → Implement
+3. Full: Interview → PRD.md (approval gate) → SPECIFICATION.md → Implement
 
 See `./deft/coding/testing.md` for complete testing standards.
 
@@ -111,7 +143,7 @@ All languages require ≥85% test coverage. See language-specific files:
 deft/run init       # Create deft structure
 deft/run bootstrap  # User config (first time only)
 deft/run project    # Project config
-deft/run spec       # Generate PRD + SPECIFICATION (optional)
+deft/run spec       # Sizing gate → Light (INTERVIEW.md) or Full (PRD.md) → SPECIFICATION
 ```
 
 **Work with existing deft project**:
@@ -157,7 +189,7 @@ See `./deft/docs/claude-code-integration.md` for integration details.
 ## Remember
 
 1. **Lazy load files** - Only read what you need
-2. **User.md is king** - Highest precedence always
+2. **User.md Personal is king** - Personal section always wins; Defaults are fallback
 3. **Task-centric** - Use `task` for everything
 4. **Test first** - Write tests before implementation
 5. **Always check** - Run `task check` before commits

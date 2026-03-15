@@ -4,7 +4,7 @@ Foundational guidelines for AI agent behavior in the Deft framework.
 
 Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 
-**⚠️ Rule Precedence**: Rules in `~/.config/deft/USER.md` override all other rules. (Override path via `DEFT_USER_PATH` env var; legacy fallback: `core/user.md`)
+**⚠️ Rule Precedence**: USER.md has two sections: `Personal` (always wins — name, custom rules) and `Defaults` (fallback — strategy, coverage, languages; PROJECT.md overrides these). (Override path via `DEFT_USER_PATH` env var; legacy fallback: `core/user.md`)
 
 **📋 Lazy Loading**: See [REFERENCES.md](./REFERENCES.md) for guidance on when to load which files.
 
@@ -91,8 +91,8 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 
 When the user types `/deft:run:<name>`, read and follow `strategies/<name>.md`.
 
-- `/deft:run:interview <name>` — Structured interview → PRD → SPECIFICATION ([strategies/interview.md](./strategies/interview.md))
-- `/deft:run:yolo <name>` — Auto-pilot interview; agent picks all recommended options ([strategies/yolo.md](./strategies/yolo.md))
+- `/deft:run:interview <name>` — Structured interview with sizing gate: Light or Full path ([strategies/interview.md](./strategies/interview.md))
+- `/deft:run:yolo <name>` — Auto-pilot interview with sizing gate; Johnbot picks all options ([strategies/yolo.md](./strategies/yolo.md))
 - `/deft:run:map` — Brownfield codebase mapping ([strategies/map.md](./strategies/map.md))
 - `/deft:run:discuss <topic>` — Feynman-style alignment + decision locking ([strategies/discuss.md](./strategies/discuss.md))
 - `/deft:run:research <domain>` — Don't hand-roll + common pitfalls ([strategies/research.md](./strategies/research.md))
@@ -122,7 +122,8 @@ See [commands.md](./commands.md) for full workflow details.
 - ~ Note which rules/patterns are being applied
 
 **User Context:**
-- ! Respect `~/.config/deft/USER.md` preferences (highest precedence)
+- ! Respect `~/.config/deft/USER.md` Personal section (highest precedence)
+- ! For project-scoped settings, PROJECT.md overrides USER.md Defaults
 - ! Remember user's maintained projects and their purposes
 - ~ Adapt communication style to user's expertise level
 
